@@ -54,7 +54,7 @@ Plan file generated from `spec.md` §14. Tick a task only when it is actually ve
 - [x] Verify: all 11 tables exist; both extensions; 6 categories; 31 aliases; `hireatech_app` can SELECT but cannot DROP (server error, no leak)
 - [x] `http://localhost:3000/api/health` → `200 {"db":"ok"}` (verified live)
 - [ ] Stop the Postgres service and reload `/api/health` → clean `503 {"db":"down"}`, no stack trace — **owner runs this (needs Windows admin rights)**
-- [ ] Update `plan.md`, commit ← this entry
+- [x] Update `plan.md`, commit (0764daf) — verified end-to-end in later tests: insert/read/remove cycles, constraint enforcement, slot + review uniqueness all correct
 
 **Files involved:** `db/schema.sql`, `db/seed.sql`, `scripts/run-sql.ts`, `src/lib/db.ts`, `src/app/api/health/route.ts`, `package.json`, `.env.local`, `plan.md`
 
@@ -287,3 +287,4 @@ Plan file generated from `spec.md` §14. Tick a task only when it is actually ve
 | 2026-11-01 | Owner pushed to GitHub; `.opencode/` + `.claude/` git-ignored as local tool state (commit `8ea0ff9`) | AI session |
 | 2026-11-01 | Step 2: `db/setup.sql`, `db/schema.sql`, `db/seed.sql`, `scripts/run-sql.ts` (+4 npm scripts), `src/lib/db.ts`, `/api/health`, real `.env.local`. Role `hireatech_app` created with generated password; verified tables/extensions/seed and limited-user rights; health 200. Extra npm script `db:setup` added beyond spec (kept rights repeate­dly grantable) | AI session |
 | 2026-11-01 | Read-only `postgres` MCP server added in `opencode.json` (local, git-ignored) — used for verification, not app runtime | AI session |
+| 2026-11-01 | Full DB verification: structure, constraints (role/FK/experience/slot/review-unique), sequence refs, cascade rules, seed idempotency. Transient add/remove exercise by owner request: 4 demo users + 2 tech profiles inserted then deleted (via `hireatech_app`, committed). Tables back to seed-only state. Owner still to run service-stop health test | AI session |
