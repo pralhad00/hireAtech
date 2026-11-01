@@ -279,4 +279,6 @@ Plan file generated from `spec.md` §14. Tick a task only when it is actually ve
 | Date | Change | By |
 |---|---|---|
 | 2026-11-01 | File created from spec §14; Steps 0–1 statuses filled from actual session results | AI session |
-| 2026-11-01 | Git repo initialized (`main`), remote `origin` = github.com/pralhad00/hireAtech.git, first commit `f11cd14`; `.env.example` un-ignored in `.gitignore` | AI session |
+| 2026-11-01 | `.env.example` un-ignored in `.gitignore` | AI session |
+| 2026-11-01 | Git repo initialized (`main`), remote `origin` = github.com/pralhad00/hireAtech.git, first commit `f11cd14` | AI session |
+| 2026-11-01 | Owner pushed to GitHub; `.opencode/` + `.claude/` git-ignored as local tool state (commit `8ea0ff9`) | AI session |
