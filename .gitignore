@@ -38,6 +38,7 @@ yarn-error.log*
 .opencode/
 .claude/
 opencode.json
+.impeccable/config.local.json
 
 # vercel
 .vercel
