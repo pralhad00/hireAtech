@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:setup": "tsx scripts/run-sql.ts setup",
+    "db:schema": "tsx scripts/run-sql.ts schema",
+    "db:seed": "tsx scripts/run-sql.ts seed",
+    "db:reset": "tsx scripts/run-sql.ts reset"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

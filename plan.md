@@ -2,7 +2,7 @@
 
 Plan file generated from `spec.md` §14. Tick a task only when it is actually verified; mark a step done only after the owner confirms the "Check yourself" block passed. This file is updated as work proceeds — never silently rewrite history.
 
-> **Current step:** Step 2 — Database (create DB + limited user, `schema.sql`, `seed.sql`, `run-sql.ts`, `db.ts`, `/api/health`)
+> **Current step:** Step 2 — Database (code complete + verified except the "stop service" test — needs owner with admin rights; see Status)
 
 ---
 
@@ -43,15 +43,18 @@ Plan file generated from `spec.md` §14. Tick a task only when it is actually ve
 
 ## Step 2 — Database
 
-- [ ] Confirm `psql` available; create database `hireatech` and limited user `hireatech_app` (SELECT/INSERT/UPDATE/DELETE + USAGE on sequences; no CREATE/DROP)
-- [ ] Write `db/schema.sql`: all tables, indexes, constraints, `pg_trgm` + `fuzzystrmatch` extensions (spec §7)
-- [ ] Write `db/seed.sql`: 6 service categories + search aliases only (spec §12)
-- [ ] Write `scripts/run-sql.ts` (+ npm scripts `db:schema`, `db:seed`, `db:reset`; `db:reset` refuses when `NODE_ENV=production`)
-- [ ] Write `src/lib/db.ts`: `pg` Pool + query helper, `import "server-only"`
-- [ ] Write `src/app/api/health/route.ts` (read-only GET)
-- [ ] Create real `.env.local` from `.env.example` (owner provides real values)
-- [ ] Update `.env.example` placeholders → stay placeholders; verify real values live only in `.env.local`
-- [ ] Update `plan.md` status, commit
+- [x] Confirm `psql` available (18.6, `C:\Program Files\PostgreSQL\18\bin`, not on PATH); database `hireatech` already existed (confirmed via MCP), so no creation needed
+- [x] Create limited user `hireatech_app` + rights (SELECT/INSERT/UPDATE/DELETE + seq USAGE; DROP refused — verified); done via `db/setup.sql` + one ALTER ROLE for its password
+- [x] Write `db/schema.sql`: all tables, indexes, constraints, `pg_trgm` + `fuzzystrmatch` extensions (spec §7)
+- [x] Write `db/seed.sql`: 6 service categories + 31 search aliases only (spec §12)
+- [x] Write `scripts/run-sql.ts` (+ npm scripts `db:setup`, `db:schema`, `db:seed`, `db:reset`; `db:reset` refuses when `NODE_ENV=production`)
+- [x] Write `src/lib/db.ts`: `pg` Pool + `query()` helper, `import "server-only"`
+- [x] Write `src/app/api/health/route.ts` (read-only GET) — note: `export const dynamic` is INVALID with cacheComponents on
+- [x] Create real `.env.local` (app password generated `xobX2…`; ADMIN_* are placeholders — set before Step 5)
+- [x] Verify: all 11 tables exist; both extensions; 6 categories; 31 aliases; `hireatech_app` can SELECT but cannot DROP (server error, no leak)
+- [x] `http://localhost:3000/api/health` → `200 {"db":"ok"}` (verified live)
+- [ ] Stop the Postgres service and reload `/api/health` → clean `503 {"db":"down"}`, no stack trace — **owner runs this (needs Windows admin rights)**
+- [ ] Update `plan.md`, commit ← this entry
 
 **Files involved:** `db/schema.sql`, `db/seed.sql`, `scripts/run-sql.ts`, `src/lib/db.ts`, `src/app/api/health/route.ts`, `package.json`, `.env.local`, `plan.md`
 
@@ -282,3 +285,5 @@ Plan file generated from `spec.md` §14. Tick a task only when it is actually ve
 | 2026-11-01 | `.env.example` un-ignored in `.gitignore` | AI session |
 | 2026-11-01 | Git repo initialized (`main`), remote `origin` = github.com/pralhad00/hireAtech.git, first commit `f11cd14` | AI session |
 | 2026-11-01 | Owner pushed to GitHub; `.opencode/` + `.claude/` git-ignored as local tool state (commit `8ea0ff9`) | AI session |
+| 2026-11-01 | Step 2: `db/setup.sql`, `db/schema.sql`, `db/seed.sql`, `scripts/run-sql.ts` (+4 npm scripts), `src/lib/db.ts`, `/api/health`, real `.env.local`. Role `hireatech_app` created with generated password; verified tables/extensions/seed and limited-user rights; health 200. Extra npm script `db:setup` added beyond spec (kept rights repeate­dly grantable) | AI session |
+| 2026-11-01 | Read-only `postgres` MCP server added in `opencode.json` (local, git-ignored) — used for verification, not app runtime | AI session |

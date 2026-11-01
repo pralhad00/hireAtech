@@ -1,0 +1,77 @@
+-- Seed data (spec §12): the six service categories and their search aliases ONLY.
+-- No technicians, customers, bookings or reviews - test accounts are registered
+-- through the app. Run as admin: npm run db:seed. Safe to re-run.
+
+INSERT INTO service_categories
+  (slug, name, tagline, description, icon)
+VALUES
+  ('electrician',
+   'Electrician',
+   'Safe wiring, switches and power fixes',
+   'Repairs faulty wiring, switches, sockets, breakers and power problems, and connects fixtures or appliances safely.',
+   'bolt'),
+  ('plumber',
+   'Plumber',
+   'Leaks, taps, pipes and drainage',
+   'Fixes leaks, blocked drains, taps, toilets and tanks, and installs or repairs pipes.',
+   'droplet'),
+  ('carpenter',
+   'Carpenter',
+   'Doors, windows and woodwork',
+   'Repairs doors and windows, builds or fixes furniture, and does custom wood installations.',
+   'saw'),
+  ('appliance-repair',
+   'Appliance Repair',
+   'Home appliances fixed at your door',
+   'Repairs fridges, refrigerators, washing machines, TVs and other household appliances.',
+   'plug'),
+  ('painting',
+   'Painting',
+   'Fresh paint, inside and out',
+   'Interior and exterior painting for rooms and buildings, including surface preparation.',
+   'brush'),
+  ('general-maintenance',
+   'General Maintenance',
+   'Small repairs and handyman tasks',
+   'Handles everyday repairs, small installations and odd maintenance jobs around the home.',
+   'hammer')
+ON CONFLICT (slug) DO NOTHING;
+
+-- Words people type when searching (spec §12). Extend via Admin > Categories.
+INSERT INTO category_aliases (category_id, alias)
+SELECT c.id, v.alias
+FROM service_categories c
+JOIN (VALUES
+  ('electrician', 'electric'),
+  ('electrician', 'electrical'),
+  ('electrician', 'bijuli'),
+  ('electrician', 'bijuli mistri'),
+  ('electrician', 'wiring'),
+  ('electrician', 'switch'),
+  ('electrician', 'socket'),
+  ('plumber', 'plumbing'),
+  ('plumber', 'plumbar'),
+  ('plumber', 'plamber'),
+  ('plumber', 'pani'),
+  ('plumber', 'tap'),
+  ('plumber', 'pipe'),
+  ('plumber', 'leak'),
+  ('carpenter', 'carpentry'),
+  ('carpenter', 'furniture'),
+  ('carpenter', 'door'),
+  ('carpenter', 'window'),
+  ('appliance-repair', 'appliance'),
+  ('appliance-repair', 'fridge'),
+  ('appliance-repair', 'refrigerator'),
+  ('appliance-repair', 'washing machine'),
+  ('appliance-repair', 'tv'),
+  ('painting', 'painter'),
+  ('painting', 'paint'),
+  ('painting', 'rang'),
+  ('painting', 'rangrogan'),
+  ('general-maintenance', 'maintenance'),
+  ('general-maintenance', 'handyman'),
+  ('general-maintenance', 'repair'),
+  ('general-maintenance', 'mistri')
+) AS v(slug, alias) ON v.slug = c.slug
+ON CONFLICT (category_id, alias) DO NOTHING;
