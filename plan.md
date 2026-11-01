@@ -31,7 +31,7 @@ Plan file generated from `spec.md` §14. Tick a task only when it is actually ve
 - [x] No pages, routing, components or DB code added; starter page untouched
 - [x] `npm install-scripts approve esbuild` → `allowScripts` in `package.json` (npm ≥11 install-scripts policy)
 - [x] `package.json` renamed `hireatech`
-- [ ] `git init` + first commit (directory is not yet a git repo)
+- [x] `git init` + first commit (directory is not yet a git repo)
 
 **Files involved:** `package.json`, `.gitignore`, `.env.example`, `next.config.ts`, `tsconfig.json`, `eslint.config.mjs`, `src/app/*` (starter), `AGENTS.md`, `CLAUDE.md`, `plan.md`
 
@@ -279,3 +279,4 @@ Plan file generated from `spec.md` §14. Tick a task only when it is actually ve
 | Date | Change | By |
 |---|---|---|
 | 2026-11-01 | File created from spec §14; Steps 0–1 statuses filled from actual session results | AI session |
+| 2026-11-01 | Git repo initialized (`main`), remote `origin` = github.com/pralhad00/hireAtech.git, first commit `f11cd14`; `.env.example` un-ignored in `.gitignore` | AI session |
