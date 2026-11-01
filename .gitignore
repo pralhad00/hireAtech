@@ -37,6 +37,7 @@ yarn-error.log*
 # local AI-tool state (not part of the project)
 .opencode/
 .claude/
+opencode.json
 
 # vercel
 .vercel
