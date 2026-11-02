@@ -39,6 +39,7 @@ yarn-error.log*
 .claude/
 opencode.json
 .impeccable/config.local.json
+.playwright-cli/
 
 # vercel
 .vercel
