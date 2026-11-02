@@ -95,11 +95,12 @@ One `users` table with a `role` column: `customer`, `technician`, `admin`.
 | **`bcryptjs`** | Password hashing (pure JS, no native build problems) |
 | **`zod`** | Server-side validation of all incoming data |
 | **`server-only`** | Makes the build fail if server code (DB, auth) is accidentally imported into client code |
+| **`lucide-react`** | UI icons (amended Nov 2026, owner-approved). Tree-shakeable; imported per-icon, never the whole package |
 | **`tsx`** (dev) | Runs TypeScript scripts (`create-admin`, `run-sql`) |
 | **ESLint** | Comes with Next.js; catches bad patterns |
 
-- Use the versions that are current when scaffolding. Do not add UI kits, icon packages, state libraries (Redux, Zustand), auth libraries (Auth.js, Better Auth, Passport) or any ORM.
-- Icons: small inline SVG components. Fonts: `next/font` (e.g. a warm serif/slab display font plus a readable sans-serif body; **not Inter**).
+- Use the versions that are current when scaffolding. Do not add UI kits, state libraries (Redux, Zustand), auth libraries (Auth.js, Better Auth, Passport) or any ORM. (`lucide-react` is the one approved icon library; no others.)
+- Icons: **Lucide** (`lucide-react`), used sparingly (§11). Fonts: `next/font` — Manrope (display) plus Plus Jakarta Sans (body); **not Inter**.
 - State: React state and small Context only where needed (e.g. booking stepper). Server data comes from Server Components and Server Actions.
 
 ### 3.1 How the browser talks to the server
@@ -576,30 +577,96 @@ Shared fields for every trade: problem summary, description, optional access not
 
 ## 11. Design system and UX (Tailwind)
 
+> **Amended Nov 2026 (owner-approved):** the original terracotta "warm workshop"
+> system was replaced by the **Industrial Modernism** system below. The full
+> design contract lives in `DESIGN.md`; this section records the binding
+> values. All other spec sections and §0 rules remain unchanged.
+
 ### Tokens (define in the Tailwind theme / global CSS)
+
+**Primary palette**
 
 | Token | Value | Use |
 |---|---|---|
-| primary | `#E45A32` | Terracotta — main buttons, active states |
-| bg | `#F4F0E7` | Warm cream page background |
-| ink | `#182820` | Charcoal green — text, dark sections |
-| surface | `#FFFFFF` | Forms, cards |
-| muted | `#667568` | Secondary text (keep AA contrast) |
-| border | `#D8D2C7` | Dividers, field borders |
-| error | `#B42318` | Errors |
-| success | `#28734A` | Success |
+| primary | `#414A2F` | Olive green — primary brand color, buttons, important elements |
+| bg | `#F2F0E8` | Warm off-white — main page background |
+| ink | `#25271F` | Dark charcoal — headings, body text, dark surfaces |
+| surface | `#FFFFFF` | Cards, inputs, contrasting surfaces |
 
-Spacing on a 4px base. Small radius (2–8px). Borders over shadows.
+**Supporting palette**
+
+| Token | Value | Use |
+|---|---|---|
+| primary-soft | `#68734C` | Light olive — secondary brand elements |
+| border | `#DCD9CC` | Warm borders and separators |
+| muted | `#77786F` | Muted text — secondary information (AA on bg/surface) |
+| bg-subtle | `#E9E7DE` | Neutral surface — subtle background variation |
+
+**Functional palette** (meaningful states only, never decoration)
+
+| Token | Value | Use |
+|---|---|---|
+| success | `#287A50` | Successful actions, confirmations |
+| warning | `#B77A35` | Warnings, pending attention |
+| error | `#B7443D` | Errors, destructive actions |
+
+Color rules: off-white dominates backgrounds; charcoal gives text contrast;
+white separates surfaces; supporting colors never compete with the primary
+palette; no extra accent colors beyond this table.
 
 ### Typography
-- Distinctive display font for H1–H2 (warm serif/slab); readable sans-serif body (not Inter). Weights 400 / 600 / 700. Body 16px on mobile (14px minimum for secondary text).
+
+- Display/headings/navigation/buttons: **Manrope** (weights 400/500/600/700/800).
+- Body/descriptions/forms/long text: **Plus Jakarta Sans** (weights 400/500/600).
+- Both self-hosted via `next/font` — no font CDN. **Never Inter.**
+- Large, bold, confident headings; hierarchy via size and weight.
+- Scale (desktop; responsive down on mobile): display 48–56px, page headings
+  32–40px, section headings 24–28px, component headings 18–20px, body 15–16px,
+  labels 13–14px, supporting text 12px. Body 16px on mobile; 14px minimum for
+  secondary text.
+
+### Borders, shapes and surfaces
+
+- Prefer square corners: standard border radius **0–4px**. No pill-shaped
+  buttons or containers.
+- 1px solid borders; visible separators; borders and alignment instead of
+  shadows.
+- Solid surfaces only (white, off-white, olive, charcoal). Avoid nested
+  containers; do not put every element inside a card.
+- **Strictly avoid:** drop shadows, gradient backgrounds, glass/glassmorphism,
+  glow, floating decorative elements, excessive blur, excessive rounding.
+
+Spacing is on the 4px base: 4 / 8 / 16 / 24 / 32 / 48 / 64. Container side
+padding: 32px desktop, 24px tablet, 16px mobile; max content width 1200px.
+
+### Photography and visual assets
+
+- Photography-led brand: professional photography of Nepalese technicians in
+  real residential/commercial settings, natural lighting, realistic equipment.
+- No generic Western stock photography, no AI-generated imagery, no
+  decorative image effects.
+- Until real photo assets exist, use **honest photo slots** — bordered
+  charcoal/off-white blocks with truthful captions describing what the photo
+  will show. Never substitute invented imagery (§0).
+- Technician profiles keep **initials avatars** (photos per technician remain
+  out of scope; no file uploads).
 
 ### Component rules
-- Buttons: primary, secondary (outlined), ghost; visible hover, focus, disabled and loading states.
-- Inputs: visible label above, 1px border, error text below, never color-only errors.
-- Icons: one inline-SVG set; no emoji as icons. No gradients, no purple/indigo, no glass effects, no piles of cards.
-- Breakpoints: mobile `< 640px`, tablet `640–1023px`, desktop `≥ 1024px`. No horizontal overflow at any size.
-- Technician photos are **out of scope** (no file uploads); use initials avatars.
+
+- Buttons: primary (olive, white text), secondary (white/transparent,
+  charcoal border and text), ghost; sharp corners; visible hover, focus,
+  disabled and loading states. Every action button disables while working.
+- Inputs: solid white/off-white background, 1px border, sharp corners,
+  visible label above, error text below (never color-only).
+- Icons: **Lucide** (`lucide-react`), sparse and purposeful — consistent
+  sizing, no decorative icon beside every heading, never emoji, never a mix
+  of icon sets. Typography and layout lead; icons support.
+- Breakpoints: mobile `< 640px`, tablet `640–1023px`, desktop `≥ 1024px`. No
+  horizontal overflow at any size.
+- Withhold decorative treatments: no gradients, no purple/indigo, no glass
+  effects, no piles of identical cards (structured rows/grids instead).
+- Status badges use text plus colour (including `warning` for pending
+  states).
 
 ### UX rules
 - Mobile-first; the search box is the most prominent element on the home page.
