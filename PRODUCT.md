@@ -40,13 +40,13 @@ HireATech is a web platform where customers hire local technicians. Technicians 
 - **Technical constraints (mandatory, from spec §0/§10):** PostgreSQL with raw SQL only — no ORM/query builder; every query parameterized via `pg`; all SQL in `src/lib/queries/`; state changes only through Server Actions; no libraries beyond spec §3 without asking; DB/auth code starts with `import "server-only"`; friendly error pages, never raw errors.
 - **Within the product:** technician photos out of scope (initials avatars only); no file uploads, maps, chat, real payments, verification documents (§16).
 - **Deployment (confirmed with owner Nov 2026):** the app will be publicly deployed. HTTPS-only with `secure` session cookies is therefore a real requirement, not theoretical.
-- **Deliberately undecided:** concrete hosting provider/target; fonts beyond the spec's binding category (warm serif/slab display + readable sans body, not Inter — decided during layout work, spec §11).
+- **Deliberately undecided:** concrete hosting provider/target.
 
 ## Brand Commitments
 
 - **Name:** HireATech.
 - **Verbal identity (binding):** honest, plain, calm copy — never overstate; no invented proof; status language exact ("Awaiting technician response", never "confirmed").
-- **Visual tokens (binding, spec §11):** primary terracotta `#E45A32`, cream background `#F4F0E7`, charcoal-green ink `#182820`, white surfaces, muted `#667568`, border `#D8D2C7`, error `#B42318`, success `#28734A`. Borders over shadows; 4px spacing base; small radii (2–8px). No gradients, no purple/indigo, no glass effects, no emoji as icons, no piles of cards. Inline-SVG icon set only. Decorative world (fonts, imagery style) is established during Step 3 layout work; these tokens are permanent constraints.
+- **Visual tokens (binding, spec §11 as amended Nov 2026, owner-approved — Industrial Modernism):** primary olive `#414A2F`, off-white bg `#F2F0E8`, charcoal ink `#25271F`, white surfaces, light olive `#68734C`, warm border `#DCD9CC`, muted `#77786F` (large labels only; `#5E5F57` for small text), neutral surface `#E9E7DE`, success `#287A50`, warning `#B77A35`, error `#B7443D`. Sharp 0–4px radii, 1px borders, borders over shadows; 4px spacing base. No gradients, no purple/indigo, no glass/shadows, no emoji as icons, no piles of cards. Icons: Lucide (`lucide-react`). Typography: Manrope display + Plus Jakarta Sans body, never Inter. Photography-led with honest photo slots until real assets exist. Full contract: `DESIGN.md`.
 
 ## Evidence on Hand
 

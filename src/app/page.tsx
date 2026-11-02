@@ -1,69 +1,224 @@
-import Image from "next/image";
+import Link from "next/link";
+import type { Metadata } from "next";
+import { IconSquare } from "@/components/ui/icon-square";
+import { ArrowRight, Search } from "@/components/ui/icons";
+import { listCategories } from "@/lib/queries/categories";
 
-export default function Home() {
+/*
+ * Home (spec route table; DESIGN.md §9): olive search-first band, six real
+ * category tiles pulled live from service_categories, numbered how-it-works
+ * flow, service-area note, honest FAQ preview. No stats, no testimonials —
+ * we have none to publish (spec §0). No entrance animations (DESIGN.md §8).
+ *
+ * The search box submits to /services?q=…; real technician search + results
+ * arrive in Step 8, so the services page ignores `q` until then.
+ */
+
+export const metadata: Metadata = {
+  description:
+    "Search for a plumber, electrician, carpenter and more in Birtamod, Jhapa. Approved technicians, cash on completion, and reviews after the job.",
+};
+
+const steps = [
+  {
+    title: "Find the right trade",
+    body: "Browse the list of services — or type what you need. Everyday words work: try “bijuli mistri” for an electrician or “pani” for a plumber.",
+  },
+  {
+    title: "Book a visit",
+    body: "Pick a technician, describe the job, choose a date and time. Your request first shows as “waiting for the technician’s response” — “confirmed” only once they accept.",
+  },
+  {
+    title: "Get it done, then review",
+    body: "Pay cash when the work is finished. After a completed booking you can rate the technician and leave a short comment.",
+  },
+];
+
+const faqs = [
+  {
+    question: "Are the technicians checked?",
+    answer:
+      "Yes. Every technician registers and can only appear after an admin approves them. You always pick a specific technician — there is no “post a job and wait” here.",
+  },
+  {
+    question: "How do I pay?",
+    answer:
+      "Cash, paid directly to the technician when the job is finished. Online payment is not available yet — when it arrives it will be shown in the app, not promised in advance.",
+  },
+  {
+    question: "Can I leave a review?",
+    answer:
+      "Reviews are only open after a completed booking, so what you read reflects real jobs — one review per booking, with a rating and an optional comment.",
+  },
+];
+
+export default async function HomePage() {
+  const categories = await listCategories();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <>
+      {/* Hero: the search box is the most prominent element (spec §11) */}
+      <section className="bg-primary text-white">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
+          <div className="mx-auto max-w-2xl text-center">
+            <h1 className="font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+              Find a trusted local technician
+            </h1>
+            <p className="mt-3 text-base text-white/90 sm:text-lg">
+              Plumbers, electricians, carpenters and more — in Birtamod, Jhapa.
+            </p>
+
+            <form
+              action="/services"
+              method="get"
+              role="search"
+              className="flex justify-center mt-8"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+              <div className="flex w-full max-w-xl rounded-lg border border-ink bg-surface p-1.5">
+                <label htmlFor="home-search" className="sr-only">
+                  What do you need done?
+                </label>
+                <span className="pointer-events-none inline-flex shrink-0 items-center pl-3 text-ink">
+                  <Search className="size-5" />
+                </span>
+                <input
+                  id="home-search"
+                  name="q"
+                  type="search"
+                  autoComplete="off"
+                  placeholder="What do you need done? Try “bijuli mistri”"
+                  className="mx-2 min-w-0 flex-1 bg-transparent py-2.5 text-base text-ink placeholder:text-muted-strong"
+                />
+                <button
+                  type="submit"
+                  className="shrink-0 rounded-lg bg-ink px-4 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:px-6"
+                >
+                  Search
+                </button>
+              </div>
+            </form>
+
+            <p className="mt-4 text-sm text-white/90">
+              Everyday words are fine — “pani”, “bijuli mistri”, “mistri”.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Category tiles: real rows from the database, not invented data */}
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+        <h2 className="font-display text-2xl font-bold sm:text-3xl">
+          What needs fixing?
+        </h2>
+        <p className="mt-2 max-w-prose text-muted-strong">
+          Every trade that joins HireATech appears here — updated as
+          technicians are approved.
+        </p>
+
+        <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          {categories.map((category) => (
+            <li key={category.slug}>
+              <Link
+                href={`/services/${category.slug}`}
+                className="flex h-full flex-col items-center gap-3 rounded-lg border border-border bg-surface p-4 text-center transition-colors hover:border-ink"
+              >
+                <IconSquare icon={category.icon} />
+                <span className="w-full">
+                  <span className="block text-sm font-semibold leading-tight">
+                    {category.name}
+                  </span>
+                  <span className="mt-1 block text-xs leading-snug text-muted-strong">
+                    {category.tagline}
+                  </span>
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* How it works — numbered flow, not a three-card grid (DESIGN.md §7) */}
+      <section className="border-y border-border bg-surface">
+        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+          <h2 className="font-display text-2xl font-bold sm:text-3xl">
+            How it works
+          </h2>
+          <ol className="mt-8 max-w-3xl space-y-8">
+            {steps.map((step, index) => (
+              <li key={step.title} className="flex gap-4">
+                <span
+                  aria-hidden={true}
+                  className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary font-display text-base font-bold text-white"
+                >
+                  {index + 1}
+                </span>
+                <div>
+                  <h3 className="font-display text-lg font-semibold">
+                    {step.title}
+                  </h3>
+                  <p className="mt-2 max-w-prose text-muted-strong sm:text-base">
+                    {step.body}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <Link
+            href="/how-it-works"
+            className="mt-8 inline-flex items-center gap-2 font-semibold text-primary underline-offset-4 hover:underline"
+          >
+            More detail on how it works
+            <ArrowRight className="size-4" />
+          </Link>
+        </div>
+      </section>
+
+      {/* Service-area note */}
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+        <div className="rounded-lg border border-border bg-surface p-6 sm:p-8">
+          <h2 className="font-display text-xl font-bold sm:text-2xl">
+            Where we work
+          </h2>
+          <p className="mt-2 max-w-prose text-muted-strong">
+            HireATech serves{" "}
+            <strong className="font-semibold text-ink">
+              Birtamod, Jhapa
+            </strong>{" "}
+            and the neighbourhoods around it. When you book a visit, your
+            address helps the technician plan the trip — cash on completion,
+            NPR pricing, local technicians.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* FAQ preview: only what the spec guarantees — nothing invented */}
+      <section className="mx-auto max-w-6xl px-4 pb-12 sm:px-6 sm:pb-16">
+        <h2 className="font-display text-2xl font-bold sm:text-3xl">
+          Before you book
+        </h2>
+        <div className="mt-8 divide-y divide-border rounded-lg border border-border bg-surface">
+          {faqs.map((faq) => (
+            <details key={faq.question} className="px-5 py-4">
+              <summary className="cursor-pointer list-none font-semibold">
+                {faq.question}
+              </summary>
+              <p className="mt-3 max-w-prose text-sm text-muted-strong sm:text-base">
+                {faq.answer}
+              </p>
+            </details>
+          ))}
         </div>
-      </main>
-    </div>
+        <p className="mt-4 text-sm text-muted-strong">
+          More questions?{" "}
+          <Link
+            href="/help"
+            className="font-semibold text-primary underline-offset-4 hover:underline"
+          >
+            Read the full help page
+          </Link>
+          .
+        </p>
+      </section>
+    </>
   );
 }

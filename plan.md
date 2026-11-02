@@ -2,7 +2,7 @@
 
 Plan file generated from `spec.md` §14. Tick a task only when it is actually verified; mark a step done only after the owner confirms the "Check yourself" block passed. This file is updated as work proceeds — never silently rewrite history.
 
-> **Current step:** Step 2 — Database (code complete + verified except the "stop service" test — needs owner with admin rights; see Status)
+> **Current step:** Step 3 — Layout and public pages (code complete, self-verified in browser; owner checks before commit — see Status)
 
 ---
 
@@ -60,27 +60,27 @@ Plan file generated from `spec.md` §14. Tick a task only when it is actually ve
 
 **Check yourself:** in `psql`: `\dt` lists all tables; `SELECT slug FROM service_categories;` returns 6 rows; `SELECT count(*) FROM category_aliases;` > 0; `http://localhost:3000/api/health` → `{"db":"ok"}`; stop Postgres service → reload health URL → clean error, no stack trace.
 
-**Status:** in progress (next up).
+**Status:** done except the owner's "stop Postgres service" health test (needs admin rights; does not block Step 3 UI work).
 
 ---
 
 ## Step 3 — Layout and public pages
 
-- [ ] Tailwind design tokens from §11 (colors, spacing, radii) in theme config / global CSS
-- [ ] Fonts via `next/font`: warm serif/slab display + readable sans-serif body (not Inter)
-- [ ] Header, footer, mobile menu (components under `src/components/layout/`)
-- [ ] Home `/` (hero search box, category grid, 3-step how-it-works, service-area note, FAQ preview — no fake stats)
-- [ ] `/how-it-works`, `/about`, `/help` (honest content, no invented phone numbers/24/7 claims)
-- [ ] `/services` + `/services/[slug]` (category listing; `[slug]` page can render empty-ready)
-- [ ] `not-found.tsx` (friendly 404 with links) and `error.tsx`
-- [ ] Icons as inline SVG components (no emoji, no icon package)
-- [ ] Update `plan.md`, commit
+- [x] Tailwind design tokens from §11 (colors, spacing, radii) in theme config / global CSS
+- [x] Fonts via `next/font`: warm serif/slab display + readable sans-serif body (not Inter)
+- [x] Header, footer, mobile menu (components under `src/components/layout/`)
+- [x] Home `/` (hero search box, category grid, 3-step how-it-works, service-area note, FAQ preview — no fake stats)
+- [x] `/how-it-works`, `/about`, `/help` (honest content, no invented phone numbers/24/7 claims)
+- [x] `/services` + `/services/[slug]` (category listing; `[slug]` page can render empty-ready)
+- [x] `not-found.tsx` (friendly 404 with links) and `error.tsx`
+- [x] Icons as inline SVG components (no emoji, no icon package)
+- [x] Update `plan.md` — commit still pending owner checks (Rule 6)
 
 **Files involved:** `src/app/layout.tsx`, `src/app/globals.css`, `src/app/page.tsx`, `src/app/how-it-works/`, `about/`, `help/`, `services/`, `not-found.tsx`, `error.tsx`, `src/components/layout/`, `src/components/ui/`
 
 **Check yourself:** open each URL; DevTools device mode (phone width) → no horizontal scroll; Tab through header → visible focus; `/does-not-exist` → friendly 404.
 
-**Status:** not started.
+**Status:** code complete; rebuilt Nov 2026 to the Industrial Modernism system after the owner-approved spec §11 amendment (olive/charcoal palette, Manrope + Plus Jakarta Sans, 0–4px radii, Lucide icons — commit trail: spec amendment → docs → rebuild). Re-verified in Edge via Playwright: all pages at desktop + 390px (0 overflow), mobile menu open/Escape-close, hero search submits, focus rings visible, 404 with HTTP status, lint + tsc clean, impeccable detector 0 findings. **Owner re-checks before Step 4.**
 
 ---
 
@@ -291,4 +291,6 @@ Plan file generated from `spec.md` §14. Tick a task only when it is actually ve
 | 2026-11-01 | Installed `impeccable` design skill (v0.1.18 engine) into `.opencode/skills/impeccable` — stays local per the owner's rule (git-ignored). Spec §11 design tokens remain the binding design rules | AI session |
 | 2026-11-01 | Moved impeccable to **global** install at owner request: skill + command now live in `C:\Users\ROG14\.config\opencode\` (available in every project); project-local copy under `.opencode/` removed | AI session |
 | 2026-11-01 | `PRODUCT.md` created via impeccable init (owner confirmed live: spec.md authoritative; app will be publicly deployed → HTTPS/secure cookies are a real requirement). Committed as project documentation | AI session |
+| 2026-11-02 | Step 3 code complete: §11 tokens in `globals.css` (starter theme removed), Bitter + Work Sans via `next/font`, header/footer/mobile menu (`src/components/layout/`), 6 drawn inline-SVG category/UI icons + IconSquare (`src/components/ui/`), DB-backed `listCategories`/`getCategoryBySlug` in `src/lib/queries/categories.ts` (`use cache` + `cacheTag('categories')`, alphabetical order), home / services / services/[slug] / how-it-works / about / help / not-found / error pages with per-page metadata. Hero search GETs `/services?q=` (results ignored until Step 8). `.playwright-cli/` git-ignored | AI session |
+| 2026-11-02 | **Spec §11 amended (owner-approved): Industrial Modernism** — olive `#414A2F` / off-white `#F2F0E8` / charcoal `#25271F` palette, Manrope + Plus Jakarta Sans, 0–4px radii, `lucide-react` approved as the one icon library (§3 amended), photography-led with honest photo slots. DESIGN.md fully rewritten; PRODUCT.md brand section synced. Rebuild: `globals.css` re-tokened, fonts swapped, `icons.tsx` now maps seed keys to Lucide, terracotta/Bitter/radii/reveal retired, eyebrow labels removed from 404/error. `muted #77786F` fails small-text AA (~3.9:1) → new `muted-strong #5E5F57` token added to spec for small secondary text. Re-verified: 0 overflow on all pages at 390px, detector 0 findings, lint + tsc clean | AI session |
 | 2026-11-02 | `DESIGN.md` written **pre-build** from a live design interview with the owner (impeccable new-work flow, all answers given live). Locked: calm workshop; bold-public/quiet-app terracotta; Bitter + Work Sans via `next/font`; search-first hero band with real-alias helper copy; one homepage reveal only; signature element = icon squares; occupied rows; owner-locked nevers (no popups, no urgency tricks, no clipart). Spec §11 stays above it; drift found during the build gets folded back into the file | AI session |
