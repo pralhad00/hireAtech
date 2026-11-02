@@ -1,5 +1,11 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 /*
  * /help — honest FAQ (spec route table). Every answer states what the spec
@@ -63,16 +69,22 @@ export default function HelpPage() {
       </p>
 
       <div className="mt-8 divide-y divide-border rounded-lg border border-border bg-surface">
-        {faqs.map((faq) => (
-          <details key={faq.question} className="px-5 py-4">
-            <summary className="cursor-pointer list-none font-semibold">
-              {faq.question}
-            </summary>
-            <p className="mt-3 max-w-prose text-sm text-muted-strong sm:text-base">
-              {faq.answer}
-            </p>
-          </details>
-        ))}
+        <Accordion multiple className="gap-0">
+          {faqs.map((faq, index) => (
+            <AccordionItem
+              key={faq.question}
+              value={`help-${index}`}
+              className="border-b-0"
+            >
+              <AccordionTrigger className="px-5 py-4 font-semibold hover:no-underline sm:text-base">
+                {faq.question}
+              </AccordionTrigger>
+              <AccordionContent className="px-5 pb-4 text-sm text-muted-strong sm:text-base">
+                {faq.answer}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </div>
 
       <p className="mt-6 max-w-prose text-sm text-muted-strong sm:text-base">

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 /*
  * Friendly 404 (spec route table): links to Services and How it works.
@@ -17,20 +18,23 @@ export default function NotFound() {
       </p>
       <ul className="mt-8 flex flex-col gap-3 sm:flex-row">
         <li>
-          <Link
-            href="/services"
-            className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 font-semibold text-white transition-opacity hover:opacity-90"
+          <Button
+            render={<Link href="/services" />}
+            nativeButton={false}
+            className="justify-center"
           >
             Browse services
-          </Link>
+          </Button>
         </li>
         <li>
-          <Link
-            href="/how-it-works"
-            className="inline-flex items-center rounded-lg border border-ink bg-surface px-5 py-2.5 font-semibold text-ink transition-colors hover:border-primary hover:text-primary"
+          <Button
+            variant="outline"
+            render={<Link href="/how-it-works" />}
+            nativeButton={false}
+            className="justify-center"
           >
             How it works
-          </Link>
+          </Button>
         </li>
       </ul>
       <p className="mt-8 text-sm text-muted-strong">

@@ -1,7 +1,16 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { IconSquare } from "@/components/ui/icon-square";
-import { ArrowRight, Search } from "@/components/ui/icons";
+import { ArrowRight } from "@/components/ui/icons";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Search } from "@/components/ui/icons";
 import { listCategories } from "@/lib/queries/categories";
 
 /*
@@ -74,27 +83,31 @@ export default async function HomePage() {
               role="search"
               className="flex justify-center mt-8"
             >
-              <div className="flex w-full max-w-xl rounded-lg border border-ink bg-surface p-1.5">
+              <div className="flex w-full max-w-xl gap-1.5">
                 <label htmlFor="home-search" className="sr-only">
                   What do you need done?
                 </label>
-                <span className="pointer-events-none inline-flex shrink-0 items-center pl-3 text-ink">
-                  <Search className="size-5" />
-                </span>
-                <input
-                  id="home-search"
-                  name="q"
-                  type="search"
-                  autoComplete="off"
-                  placeholder="What do you need done? Try “bijuli mistri”"
-                  className="mx-2 min-w-0 flex-1 bg-transparent py-2.5 text-base text-ink placeholder:text-muted-strong"
-                />
-                <button
+                <div className="relative min-w-0 flex-1">
+                  <Search className="pointer-events-none absolute left-3.5 top-1/2 size-5 -translate-y-1/2 text-ink" />
+                  <Input
+                    id="home-search"
+                    name="q"
+                    type="search"
+                    autoComplete="off"
+                    placeholder="What do you need done? Try “bijuli mistri”"
+                    className="h-12 border-ink bg-surface pl-11 text-ink shadow-none placeholder:text-muted-strong"
+                  />
+                </div>
+                {/* Inverse button on the olive hero: same-color-on-same-color
+                    would vanish; light surface keeps it high-contrast. */}
+                <Button
                   type="submit"
-                  className="shrink-0 rounded-lg bg-ink px-4 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:px-6"
+                  size="lg"
+                  variant="outline"
+                  className="shrink-0 border-surface bg-surface text-ink hover:border-surface hover:text-ink"
                 >
                   Search
-                </button>
+                </Button>
               </div>
             </form>
 
@@ -197,16 +210,22 @@ export default async function HomePage() {
           Before you book
         </h2>
         <div className="mt-8 divide-y divide-border rounded-lg border border-border bg-surface">
-          {faqs.map((faq) => (
-            <details key={faq.question} className="px-5 py-4">
-              <summary className="cursor-pointer list-none font-semibold">
-                {faq.question}
-              </summary>
-              <p className="mt-3 max-w-prose text-sm text-muted-strong sm:text-base">
-                {faq.answer}
-              </p>
-            </details>
-          ))}
+          <Accordion multiple className="gap-0">
+            {faqs.map((faq, index) => (
+              <AccordionItem
+                key={faq.question}
+                value={`faq-${index}`}
+                className="border-b-0"
+              >
+                <AccordionTrigger className="px-5 py-4 font-semibold hover:no-underline sm:text-base">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="px-5 pb-4 text-sm text-muted-strong sm:text-base">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
         <p className="mt-4 text-sm text-muted-strong">
           More questions?{" "}

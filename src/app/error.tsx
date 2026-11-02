@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 
 /*
@@ -32,19 +33,12 @@ export default function AppError({
         there.
       </p>
       <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-        <button
-          type="button"
-          onClick={() => retry()}
-          className="inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 font-semibold text-white transition-opacity hover:opacity-90"
-        >
+        <Button type="button" onClick={() => retry()}>
           Try again
-        </button>
-        <Link
-          href="/"
-          className="inline-flex items-center justify-center rounded-lg border border-ink bg-surface px-5 py-2.5 font-semibold text-ink transition-colors hover:border-primary hover:text-primary"
-        >
+        </Button>
+        <Button variant="outline" render={<Link href="/" />} nativeButton={false}>
           Back to home
-        </Link>
+        </Button>
       </div>
     </div>
   );

@@ -41,6 +41,9 @@ opencode.json
 .impeccable/config.local.json
 .playwright-cli/
 
+# impeccable live-mode helper (local tooling, never ships)
+.impeccable/
+
 # vercel
 .vercel
 

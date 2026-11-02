@@ -8,6 +8,8 @@ import "./globals.css";
  * Fonts (DESIGN.md §3): Manrope — bold geometric sans — for headings/nav/
  * buttons, Plus Jakarta Sans for body text. next/font self-hosts both (no
  * font CDN, no layout shift). "Never Inter" (spec §11, amended).
+ * Do not add another next/font with variable "--font-sans" — that variable
+ * is composed in globals.css and a collision silently overrides Jakarta.
  */
 
 const manrope = Manrope({
