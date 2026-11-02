@@ -32,7 +32,7 @@ export default async function CategoryPage({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
-      <nav aria-label="Breadcrumb" className="text-sm text-muted-strong">
+      <nav aria-label="Breadcrumb" className="text-sm text-muted-strong sm:text-base">
         <Link
           href="/services"
           className="font-medium text-muted-strong underline-offset-4 hover:text-primary hover:underline"
@@ -45,30 +45,34 @@ export default async function CategoryPage({
         </span>
       </nav>
 
-      <div className="mt-6 flex items-center gap-4">
+      <div className="mt-8 flex items-start gap-4">
         <IconSquare icon={category.icon} size="lg" />
-        <div>
-          <h1 className="font-display text-3xl font-bold sm:text-4xl">
+        <div className="min-w-0 flex-1">
+          <div className="border-b border-dotted border-border block font-display text-3xl font-bold text-ink leading-none mb-1 sm:text-4xl">
             {category.name}
-          </h1>
-          <p className="mt-1 text-muted-strong">{category.tagline}</p>
+          </div>
+          <p className="font-mono text-sm text-muted-strong sm:text-base">
+            {category.tagline}
+          </p>
         </div>
       </div>
 
-      <p className="mt-6 max-w-prose text-muted-strong">{category.description}</p>
+      <p className="mt-6 max-w-prose text-muted-strong sm:text-base">
+        {category.description}
+      </p>
 
       <section
         aria-labelledby="technicians-heading"
-        className="mt-10 rounded-lg border border-border bg-surface"
+        className="mt-10 rounded-md border border-border bg-surface"
       >
-        <div className="border-b border-border px-5 py-4 sm:px-6">
+        <div className="border-b border-dotted border-border px-5 py-4 sm:px-6 sm:py-5">
           <h2
             id="technicians-heading"
-            className="font-display text-lg font-semibold"
+            className="font-display text-lg font-semibold text-ink sm:text-xl"
           >
             Approved technicians
           </h2>
-          <p className="mt-1 text-sm text-muted-strong">
+          <p className="mt-1 text-sm text-muted-strong sm:text-base">
             {category.approvedTechnicianCount === 0
               ? "None in this category yet — updates as technicians are approved."
               : `${category.approvedTechnicianCount} available.`}
@@ -89,7 +93,7 @@ export default async function CategoryPage({
                 className="font-semibold text-primary underline-offset-4 hover:underline"
               >
                 service category
-              </Link>
+              </Link>{" "}
               .
             </p>
           ) : (

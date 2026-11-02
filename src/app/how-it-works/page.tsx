@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 
 /*
  * /how-it-works — honest information page (spec route table): describes the
- * real product flow and the real status lifecycle. No invented numbers,
- * badges or promises.
+ * real product flow and the real status lifecycle as numbered stations. No
+ * invented numbers, badges or promises.
  */
 
 export const metadata: Metadata = {
@@ -13,9 +13,9 @@ export const metadata: Metadata = {
     "How HireATech works: pick a trade, book a visit with a specific approved technician, follow your booking status, pay cash, then review.",
 };
 
-const customerSteps = [
+const customerStations = [
   {
-    title: "Pick a trade",
+    title: "Find the right trade",
     body: "Browse /services or search with the words you actually use — “bijuli mistri”, “pani”, “mistri”. The search matches everyday and local terms, not just English spellings.",
   },
   {
@@ -24,7 +24,7 @@ const customerSteps = [
   },
   {
     title: "Book a visit",
-    body: "Describe the job, set a date and time window. Your request starts as a “pending” booking — the technician accepts or rejects it, and you are told either way.",
+    body: "Describe the job, set a date and time window. Your request starts as “pending” — the technician accepts or rejects it, and you are told either way.",
   },
   {
     title: "Follow the status",
@@ -36,7 +36,7 @@ const customerSteps = [
   },
 ];
 
-const technicianSteps = [
+const technicianStations = [
   {
     title: "Register",
     body: "Create a technician account with your trade, experience and service area.",
@@ -58,65 +58,83 @@ const technicianSteps = [
 export default function HowItWorksPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
-      <h1 className="font-display text-3xl font-bold sm:text-4xl">
+      <div className="font-mono text-xs font-bold tracking-widest text-primary mb-4 sm:text-sm">
+        STATIONS · HOW IT WORKS
+      </div>
+      <h1 className="font-display text-3xl font-bold text-ink tracking-tight sm:text-4xl">
         How it works
       </h1>
-      <p className="mt-3 max-w-prose text-muted-strong">
+      <p className="mt-2 max-w-prose text-muted-strong sm:text-base">
         HireATech connects people in Birtamod, Jhapa with local technicians —
         but only through real mechanisms: admin approval before anyone appears
         publicly, server-enforced booking statuses, and reviews that only open
-        after a completed job. Here is the whole flow, from both sides.
+        after a completed job. Here is the whole flow, station by station.
       </p>
 
-      <h2 className="mt-12 font-display text-2xl font-bold">
-        If you need a job done
-      </h2>
-      <ol className="mt-6 space-y-6 border-l border-border pl-6">
-        {customerSteps.map((step, index) => (
-          <li key={step.title} className="relative">
-            <span
-              aria-hidden={true}
-              className="absolute -left-[31px] top-0.5 inline-flex size-6 items-center justify-center rounded-md bg-primary font-display text-xs font-bold text-white"
-            >
-              {index + 1}
-            </span>
-            <h3 className="font-semibold">{step.title}</h3>
-            <p className="mt-1 max-w-prose text-sm text-muted-strong sm:text-base">
-              {step.body}
-            </p>
-          </li>
-        ))}
-      </ol>
+      <div className="mt-12 space-y-10 border-l border-border pl-8">
+        <h2 className="font-display text-2xl font-bold text-ink">
+          Station 1 — If you need a job done
+        </h2>
+        <ol className="mt-6 space-y-8">
+          {customerStations.map((step, index) => (
+            <li key={step.title} className="relative">
+              <span
+                aria-hidden={true}
+                className="absolute -left-[34px] top-0 inline-flex size-8 shrink-0 items-center justify-center rounded-md border border-ink bg-ink font-display text-xs font-bold text-white"
+              >
+                {index + 1}
+              </span>
+              <div>
+                <h3 className="font-display text-lg font-semibold text-ink">
+                  {step.title}
+                </h3>
+                <p className="mt-2 max-w-prose text-muted-strong sm:text-base">
+                  {step.body}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
 
-      <h2 className="mt-12 font-display text-2xl font-bold">
-        If you are a technician
-      </h2>
-      <ol className="mt-6 space-y-6 border-l border-border pl-6">
-        {technicianSteps.map((step, index) => (
-          <li key={step.title} className="relative">
-            <span
-              aria-hidden={true}
-              className="absolute -left-[31px] top-0.5 inline-flex size-6 items-center justify-center rounded-md bg-ink font-display text-xs font-bold text-white"
-            >
-              {index + 1}
-            </span>
-            <h3 className="font-semibold">{step.title}</h3>
-            <p className="mt-1 max-w-prose text-sm text-muted-strong sm:text-base">
-              {step.body}
-            </p>
-          </li>
-        ))}
-      </ol>
+        <h2 className="mt-12 font-display text-2xl font-bold text-ink">
+          Station 2 — If you are a technician
+        </h2>
+        <ol className="mt-6 space-y-8">
+          {technicianStations.map((step, index) => (
+            <li key={step.title} className="relative">
+              <span
+                aria-hidden={true}
+                className="absolute -left-[34px] top-0 inline-flex size-8 shrink-0 items-center justify-center rounded-md border border-ink bg-ink font-display text-xs font-bold text-white"
+              >
+                {index + 1}
+              </span>
+              <div>
+                <h3 className="font-display text-lg font-semibold text-ink">
+                  {step.title}
+                </h3>
+                <p className="mt-2 max-w-prose text-muted-strong sm:text-base">
+                  {step.body}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
 
-      <div className="mt-12 rounded-lg border border-border bg-surface p-6">
-        <h2 className="font-display text-xl font-bold">What booking means</h2>
-        <p className="mt-2 max-w-prose text-sm text-muted-strong sm:text-base">
+      <div className="mt-12 rounded-md border border-border bg-surface p-8 sm:p-10">
+        <div className="font-mono text-xs font-bold tracking-widest text-primary mb-2 sm:text-sm">
+          WHAT BOOKING MEANS
+        </div>
+        <h2 className="font-display text-xl font-bold text-ink">
+          “Pending” is not “confirmed”
+        </h2>
+        <p className="mt-2 max-w-prose text-muted-strong sm:text-base">
           A “pending” booking is exactly that: waiting for the technician’s
           response. It is not confirmed, and it is never labelled as
           confirmed. Payment is cash on completion — no advance, no card, and
           no online payment until that feature actually exists.
         </p>
-        <p className="mt-4 text-sm sm:text-base">
+        <p className="mt-6 sm:text-base">
           <Link
             href="/services"
             className="font-semibold text-primary underline-offset-4 hover:underline"

@@ -26,9 +26,10 @@
   --color-warning: #b77a35;
   --color-error: #b7443d;
 
-  /* Typography (DESIGN.md §3): Manrope display, Plus Jakarta Sans body.
-     Wired to the next/font CSS variables set in app/layout.tsx. */
-  --font-display: var(--font-manrope);
+  /* Typography (DESIGN.md §3): Rajdhani condensed industrial grotesk for
+     headings/display, Plus Jakarta Sans for body. Wired to the next/font CSS
+     variables set in app/layout.tsx. */
+  --font-display: var(--font-rajdhani);
   --font-sans: var(--font-jakarta);
 
   /*
@@ -85,7 +86,7 @@
   --color-error: var(--color-error);
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
-  --font-heading: var(--font-manrope);
+  --font-heading: var(--font-rajdhani);
   /* shadcn token surface */
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);

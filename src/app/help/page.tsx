@@ -1,16 +1,10 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
 /*
  * /help — honest FAQ (spec route table). Every answer states what the spec
  * guarantees; where contact support doesn't exist yet, that is said plainly.
- * No invented phone numbers, no 24/7 promises.
+ * Ruled rows, no invented phone numbers, no 24/7 promises.
  */
 
 export const metadata: Metadata = {
@@ -60,34 +54,39 @@ const faqs = [
 export default function HelpPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
-      <h1 className="font-display text-3xl font-bold sm:text-4xl">
+      <div className="font-mono text-xs font-bold tracking-widest text-primary mb-4 sm:text-sm">
+        RECORD COLUMN · HELP & FAQ
+      </div>
+      <h1 className="font-display text-3xl font-bold text-ink tracking-tight sm:text-4xl">
         Help &amp; FAQ
       </h1>
-      <p className="mt-3 max-w-prose text-muted-strong">
+      <p className="mt-2 max-w-prose text-muted-strong sm:text-base">
         Straight answers about how HireATech behaves. Nothing here is a
         promise of a feature — it describes what works today.
       </p>
 
-      <div className="mt-8 divide-y divide-border rounded-lg border border-border bg-surface">
-        <Accordion multiple className="gap-0">
-          {faqs.map((faq, index) => (
-            <AccordionItem
-              key={faq.question}
-              value={`help-${index}`}
-              className="border-b-0"
+      <div className="mt-10 space-y-6 border-l-2 border-ink pl-8">
+        {faqs.map((faq) => (
+          <details
+            key={faq.question}
+            className="relative border-b border-border pb-6 last:border-b-0 last:pb-0"
+          >
+            <summary
+              className="flex items-center justify-between px-4 py-4 font-semibold text-ink cursor-pointer list-none hover:text-primary transition-colors sm:text-base"
             >
-              <AccordionTrigger className="px-5 py-4 font-semibold hover:no-underline sm:text-base">
-                {faq.question}
-              </AccordionTrigger>
-              <AccordionContent className="px-5 pb-4 text-sm text-muted-strong sm:text-base">
-                {faq.answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+              {faq.question}
+              <span className="shrink-0 text-muted-strong group-hover:text-primary">
+                ▾
+              </span>
+            </summary>
+            <div className="px-4 pb-4 text-sm text-muted-strong sm:text-base">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
       </div>
 
-      <p className="mt-6 max-w-prose text-sm text-muted-strong sm:text-base">
+      <p className="mt-10 max-w-prose text-sm text-muted-strong sm:text-base">
         New to the flow?{" "}
         <Link
           href="/how-it-works"

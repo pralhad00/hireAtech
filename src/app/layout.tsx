@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
-import { Manrope, Plus_Jakarta_Sans } from "next/font/google";
+import { Rajdhani, Plus_Jakarta_Sans } from "next/font/google";
 import { SiteHeader } from "@/components/layout/header";
 import { SiteFooter } from "@/components/layout/footer";
 import "./globals.css";
 
 /*
- * Fonts (DESIGN.md §3): Manrope — bold geometric sans — for headings/nav/
- * buttons, Plus Jakarta Sans for body text. next/font self-hosts both (no
- * font CDN, no layout shift). "Never Inter" (spec §11, amended).
- * Do not add another next/font with variable "--font-sans" — that variable
- * is composed in globals.css and a collision silently overrides Jakarta.
+ * Fonts (DESIGN.md §3; spec §11 amended): Rajdhani — condensed industrial
+ * grotesk — for headings/display/nav/buttons; Plus Jakarta Sans for body
+ * text. next/font self-hosts both (no font CDN, no layout shift). "Never
+ * Inter" (spec §11). Do not add another next/font with variable
+ * "--font-sans" — that variable is composed in globals.css and a collision
+ * silently overrides Jakarta.
  */
 
-const manrope = Manrope({
+const rajdhani = Rajdhani({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-manrope",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-rajdhani",
   display: "swap",
 });
 
@@ -39,7 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${manrope.variable} ${plusJakarta.variable} h-full antialiased`}
+      className={`${rajdhani.variable} ${plusJakarta.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         {/* Skip link: first focusable element, jumps past the header (§11) */}
