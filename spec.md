@@ -96,10 +96,12 @@ One `users` table with a `role` column: `customer`, `technician`, `admin`.
 | **`zod`** | Server-side validation of all incoming data |
 | **`server-only`** | Makes the build fail if server code (DB, auth) is accidentally imported into client code |
 | **`lucide-react`** | UI icons (amended Nov 2026, owner-approved). Tree-shakeable; imported per-icon, never the whole package |
+| **shadcn/ui** (+ its generated-component dependency family: `class-variance-authority`, `clsx`, `tailwind-merge`, Radix UI primitives) | Copy-in UI component base (amended Nov 2026, owner-approved). Components are generated into `src/components/ui/` and owned by this repo — not a runtime UI kit. Components are restyled to the §11 Industrial Modernism tokens (no shadcn defaults like shadows/pill radii) |
+| **`framer-motion`** | Motion library (amended Nov 2026, owner-approved) for subtle, purposeful micro-interactions only (accordion expand, menu transitions, state feedback). Still banned: scroll parallax, entrance-animation spam, decorative floaters (§11) |
 | **`tsx`** (dev) | Runs TypeScript scripts (`create-admin`, `run-sql`) |
 | **ESLint** | Comes with Next.js; catches bad patterns |
 
-- Use the versions that are current when scaffolding. Do not add UI kits, state libraries (Redux, Zustand), auth libraries (Auth.js, Better Auth, Passport) or any ORM. (`lucide-react` is the one approved icon library; no others.)
+- Use the versions that are current when scaffolding. Do not add UI kits beyond **shadcn/ui** (amended), state libraries (Redux, Zustand), auth libraries (Auth.js, Better Auth, Passport) or any ORM. (`lucide-react` is the one approved icon library, now also shadcn/ui's default icon set; `clsx`, `tailwind-merge`, `class-variance-authority` and Radix UI primitives are approved **only** as shadcn/ui's dependency family. No others.)
 - Icons: **Lucide** (`lucide-react`), used sparingly (§11). Fonts: `next/font` — Manrope (display) plus Plus Jakarta Sans (body); **not Inter**.
 - State: React state and small Context only where needed (e.g. booking stepper). Server data comes from Server Components and Server Actions.
 

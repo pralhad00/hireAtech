@@ -148,11 +148,13 @@ leads; illustrations don't fill; decorative graphics don't exist.
 
 ## 8. Motion
 
-- Minimal: subtle hover transitions (150–200ms), button state changes,
-  immediate interaction feedback.
-- No entrance animations (the previous "homepage reveal" is retired), no
-  scroll-reveal, no parallax, no floating decorations, nothing that delays
-  interaction. Bugs in performance are more visible than motion.
+- framer-motion (owner-approved Nov 2026) powers **subtle, purposeful
+  micro-interactions only**: accordion/disclosure expansion, small state
+  feedback (loading → done), gentle focus/tap affordances. Transitions stay
+  150–300ms, exponential ease-out.
+- **Still banned:** scroll parallax, page-entrance animation spam, floating
+  decorations, anything that delays interaction. Motion supports actions; it
+  shouldn't be the show.
 - Everything honors `prefers-reduced-motion`.
 
 ## 9. Homepage — first viewport (owner choice: search-first band)
