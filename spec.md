@@ -599,7 +599,8 @@ Shared fields for every trade: problem summary, description, optional access not
 |---|---|---|
 | primary-soft | `#68734C` | Light olive — secondary brand elements |
 | border | `#DCD9CC` | Warm borders and separators |
-| muted | `#77786F` | Muted text — secondary information (AA on bg/surface) |
+| muted | `#77786F` | Muted text — large labels (≥18px bold / ≥24px) and non-essential marks; **not** small body text (contrast ~3.9:1 on bg) |
+| muted-strong | `#5E5F57` | Small secondary text — passes AA ≥4.5:1 on bg and surface |
 | bg-subtle | `#E9E7DE` | Neutral surface — subtle background variation |
 
 **Functional palette** (meaningful states only, never decoration)
@@ -612,7 +613,10 @@ Shared fields for every trade: problem summary, description, optional access not
 
 Color rules: off-white dominates backgrounds; charcoal gives text contrast;
 white separates surfaces; supporting colors never compete with the primary
-palette; no extra accent colors beyond this table.
+palette; no extra accent colors beyond this table. Text is charcoal/ink
+(`ink` or `muted-strong`) on light surfaces — `muted` only at large sizes.
+Status badges are text-first with a colour signal (coloured dot/left rule),
+never colour-only.
 
 ### Typography
 
@@ -663,7 +667,7 @@ padding: 32px desktop, 24px tablet, 16px mobile; max content width 1200px.
   of icon sets. Typography and layout lead; icons support.
 - Breakpoints: mobile `< 640px`, tablet `640–1023px`, desktop `≥ 1024px`. No
   horizontal overflow at any size.
-- Withhold decorative treatments: no gradients, no purple/indigo, no glass
+- Avoid decorative treatments: no gradients, no purple/indigo, no glass
   effects, no piles of identical cards (structured rows/grids instead).
 - Status badges use text plus colour (including `warning` for pending
   states).
