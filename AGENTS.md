@@ -6,8 +6,8 @@ Local-technician booking platform (Birtamod, Jhapa, Nepal). Next.js 16 App Route
 
 ## Build status
 
-- Done: Step 1 (scaffold). Default starter page only.
-- Next: Step 2 — database (`hireatech` DB, limited `hireatech_app` user, `db/schema.sql`, `db/seed.sql`, `scripts/run-sql.ts`, `src/lib/db.ts`, `/api/health`).
+- Done: Step 1 (scaffold), Step 2 (database), Step 3 (layout and public pages — owner re-check pending; see `plan.md` Status).
+- Next: Step 4 — Authentication.
 - Work in small steps per §14 / §0: finish and verify one step before the next; never generate the whole app. The owner is a student new to Next.js/TypeScript/SQL/auth — explain new concepts in plain English and end each step with a "Check yourself" block (exact commands, expected result).
 
 ## Hard rules (from spec §0, §10 — violating these fails the project)

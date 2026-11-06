@@ -32,7 +32,7 @@ HireATech is a web platform where customers hire local technicians. Technicians 
 - Service area: Birtamod, Jhapa (Nepal). Currency NPR; Nepali mobile numbers (10 digits starting 96/97/98); no postcode/ZIP anywhere.
 - Users search with English trade names and romanized Nepali terms (e.g. "bijuli mistri", "pani", "rangrogan", "mistri"); the alias table names these — the team reviews and extends them. UI copy is English; multi-language support is out of scope.
 - The owner is a student new to Next.js/TypeScript/SQL/auth: product work proceeds in small verified steps ("Check yourself" blocks after each step, per spec §14 / plan.md). The owner understands and verifies every part.
-- Build status: Step 1 (scaffold) done; Step 2 (database) code-complete, one owner verification pending (stop-Postgres health test). Next: Step 3, layout and public pages. Progress is tracked in `plan.md`; `spec.md` is the source of truth.
+- Build status: Steps 1–2 done (scaffold; database — one owner verification pending: stop-Postgres health test). Step 3 (layout and public pages) code complete and rebuilt through two owner-approved design passes (Job Sheet world; fonts finalized as Space Grotesk) — **owner re-check pending before Step 4 (Authentication)**. Progress is tracked in `plan.md`; `spec.md` is the source of truth.
 
 ## Capabilities and Constraints
 
@@ -46,7 +46,7 @@ HireATech is a web platform where customers hire local technicians. Technicians 
 
 - **Name:** HireATech.
 - **Verbal identity (binding):** honest, plain, calm copy — never overstate; no invented proof; status language exact ("Awaiting technician response", never "confirmed").
-- **Visual tokens (binding, spec §11 as amended Nov 2026, owner-approved — Industrial Modernism):** primary olive `#414A2F`, off-white bg `#F2F0E8`, charcoal ink `#25271F`, white surfaces, light olive `#68734C`, warm border `#DCD9CC`, muted `#77786F` (large labels only; `#5E5F57` for small text), neutral surface `#E9E7DE`, success `#287A50`, warning `#B77A35`, error `#B7443D`. Sharp 0–4px radii, 1px borders, borders over shadows; 4px spacing base. No gradients, no purple/indigo, no glass/shadows, no emoji as icons, no piles of cards. Icons: Lucide (`lucide-react`). Typography: Manrope display + Plus Jakarta Sans body, never Inter. Photography-led with honest photo slots until real assets exist. Full contract: `DESIGN.md`.
+- **Visual tokens (binding, spec §11 as amended Nov 2026, owner-approved — Industrial Modernism):** primary olive `#414A2F`, off-white bg `#F2F0E8`, charcoal ink `#25271F`, white surfaces, light olive `#68734C`, warm border `#DCD9CC`, muted `#77786F` (large labels only; `#5E5F57` for small text), neutral surface `#E9E7DE`, success `#287A50`, warning `#B77A35`, error `#B7443D`. Sharp 0–4px radii, 1px borders, borders over shadows; 4px spacing base. No gradients, no purple/indigo, no glass/shadows, no emoji as icons, no piles of cards. Icons: Lucide (`lucide-react`). Typography: Space Grotesk display + Plus Jakarta Sans body, never Inter. Photography-led with honest photo slots until real assets exist. Full contract: `DESIGN.md`.
 
 ## Evidence on Hand
 

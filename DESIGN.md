@@ -72,9 +72,9 @@ complicated.
 
 ## 3. Typography
 
-- Display/headings/navigation/buttons: **Rajdhani** (condensed industrial
-  grotesk; weights 400/500/600/700) — narrow, tall letterforms, industrial
-  feel. Self-hosted via `next/font`.
+- Display/headings/navigation/buttons: **Space Grotesk** (geometric
+  grotesk; weights 400/500/600/700) — sharp, technical, marketplace-native;
+  wide uppercase for impact. Self-hosted via `next/font`.
 - Body/descriptions/forms/long text: **Plus Jakarta Sans** (weights
   400/500/600). Self-hosted via `next/font`.
 - **Never Inter** (spec §11).
@@ -179,7 +179,7 @@ leads; illustrations don't fill; decorative graphics don't exist.
 1. **Work-order masthead** (header): serial number left, brand center, service
    area right.
 2. **Ruled field area**: "FIELD ONE · WHAT NEEDS FIXING" label, huge
-   Rajdhani heading "Name the problem.", the search as field one (ruled input
+   Space Grotesk heading "Name the problem.", the search as field one (ruled input
    with icon prefix, olive primary submit button).
 3. **Record column**: six real trades with dotted leaders and `✓ APPROVED`
    stamp (green success token).
@@ -237,7 +237,7 @@ leads; illustrations don't fill; decorative graphics don't exist.
 | Retired | Replacement |
 |---|---|
 | Terracotta `#E45A32` / cream `#F4F0E7` / ink `#182820` / border `#D8D2C7` / muted `#667568` / error `#B42318` / success `#28734A` | Section 2 palette |
-| Bitter (slab serif display) + Work Sans | Rajdhani (condensed grotesk) + Plus Jakarta Sans |
+| Bitter (slab serif display) + Work Sans | Space Grotesk (geometric grotesk) + Plus Jakarta Sans |
 | Radii 2–8px | 0–4px, square-leaning |
 | Icon squares (hand-drawn SVG set in bordered squares) | Bordered 4px-radius tiles with Lucide 24px icons, uppercase-style trade label |
 | One orchestrated homepage reveal | No entrance animations at all |
