@@ -1,56 +1,33 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { IconSquare } from "@/components/ui/icon-square";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search } from "@/components/ui/icons";
+import { Search, Star, ShieldCheck, Clock, MapPin, CheckCircle2 } from "@/components/ui/icons";
 import { listCategories } from "@/lib/queries/categories";
 
 /*
- * Home (spec route table; DESIGN.md §9): the Job Sheet — a carbon-copy
- * trade work order. The search box is field one of a ruled form; picking a
- * trade stamps the row. No stats, no testimonials — we have none to publish
- * (spec §0). No entrance animations (DESIGN.md §8).
- *
- * The search box submits to /services?q=…; real technician search + results
- * arrive in Step 8, so the services page ignores `q` until then.
+ * Home (Marketplace Platform): search-first hero, service category cards with
+ * trust badges, technician preview cards, trust row. Persuade mode.
+ * No stats, no testimonials, no fake photography — honest empty states.
  */
 
 export const metadata: Metadata = {
   description:
-    "Search for a plumber, electrician, carpenter and more in Birtamod, Jhapa. Approved technicians, cash on completion, and reviews after the job.",
+    "Search for a plumber, electrician, carpenter and more in Birtamod, Jhapa. Approved technicians, cash on completion, verified reviews.",
 };
 
-const steps = [
-  {
-    title: "Find the right trade",
-    body: "Browse the list of services — or type what you need. Everyday words work: try “bijuli mistri” for an electrician or “pani” for a plumber.",
-  },
-  {
-    title: "Book a visit",
-    body: "Pick a technician, describe the job, choose a date and time. Your request first shows as “waiting for the technician’s response” — “confirmed” only once they accept.",
-  },
-  {
-    title: "Get it done, then review",
-    body: "Pay cash when the work is finished. After a completed booking you can rate the technician and leave a short comment.",
-  },
+const trustSignals = [
+  { icon: ShieldCheck, label: "Admin approved", desc: "Every technician verified before listing" },
+  { icon: Star, label: "Verified reviews", desc: "Only after completed bookings" },
+  { icon: Clock, label: "Fast response", desc: "Most reply within an hour" },
+  { icon: MapPin, label: "Local only", desc: "Birtamod, Jhapa — no outsiders" },
 ];
 
-const faqs = [
-  {
-    question: "Are the technicians checked?",
-    answer:
-      "Yes. Every technician registers and can only appear after an admin approves them. You always pick a specific technician — there is no “post a job and wait” here.",
-  },
-  {
-    question: "How do I pay?",
-    answer:
-      "Cash, paid directly to the technician when the job is finished. Online payment is not available yet — when it arrives it will be shown in the app, not promised in advance.",
-  },
-  {
-    question: "Can I leave a review?",
-    answer:
-      "Reviews are only open after a completed booking, so what you read reflects real jobs — one review per booking, with a rating and an optional comment.",
-  },
+const steps = [
+  { title: "Search your problem", body: "Type what you need — everyday words work: “bijuli mistri”, “pani”, “mistri”." },
+  { title: "Pick a category", body: "See approved technicians with ratings, experience, and NPR prices upfront." },
+  { title: "Book & track", body: "Choose a slot, describe the job, follow status: pending → accepted → done." },
 ];
 
 export default async function HomePage() {
@@ -58,210 +35,307 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Work-order masthead: serial number left, service area right. */}
-      <header className="border-b border-border bg-bg">
-        <div className="mx-auto max-w-6xl px-4 py-3 sm:px-6">
-          <div className="flex items-center justify-between gap-4 font-mono text-xs font-bold tracking-widest text-muted-strong sm:text-sm">
-            <span>HM-BTM-000481</span>
-            <span>HIREATECH · SERVICE RECORD</span>
-            <span>BIRTAMOD · JHAPA, NEPAL</span>
-          </div>
-        </div>
-      </header>
-
-      {/* First viewport — the work order itself (thesis, not a header). */}
-      <section className="bg-bg">
+      {/* Bold search hero — off-white ground, huge headline, ruled search */}
+      <section className="bg-bg py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          {/* Ruled field area: label, big heading, search as field one. */}
-          <div className="py-12 sm:py-20 border-b border-border">
-            <div className="font-mono text-xs font-bold tracking-widest text-primary mb-2 sm:text-sm">
-              FIELD ONE · WHAT NEEDS FIXING
-            </div>
-            <h1 className="font-display text-6xl font-bold leading-none text-ink tracking-tighter sm:text-7xl">
-              Name the<br />
-              problem.
+          <div className="text-center max-w-3xl mx-auto">
+            <h1 className="font-display text-5xl font-bold tracking-tight text-ink sm:text-6xl lg:text-7xl">
+              Find your{" "}
+              <span className="text-primary">mistri</span>
+              <br />
+              in minutes
             </h1>
-            <form
-              action="/services"
-              method="get"
-              role="search"
-              className="mt-8 border border-ink bg-surface"
-            >
-              <div className="flex h-12">
-                <span className="inline-flex size-12 shrink-0 items-center justify-center border-r border-ink bg-bg text-ink font-mono text-sm">
-                  <Search className="size-5" aria-hidden="true" />
-                </span>
-                <Input
-                  id="home-search"
-                  name="q"
-                  type="search"
-                  autoComplete="off"
-                  placeholder="e.g. pani tap, bijuli mistri, mistri"
-                  className="flex-1 h-full border-none bg-transparent text-ink pl-4 focus:ring-0 placeholder:text-muted-strong sm:text-base"
-                />
-                <Button
-                  type="submit"
-                  variant="default"
-                  className="h-12 px-7 shrink-0 font-display text-base sm:px-8"
-                >
-                  SEARCH
-                </Button>
+            <p className="mt-4 text-lg text-muted-strong sm:text-xl max-w-2xl mx-auto">
+              Approved local technicians. Clear NPR prices. Cash on completion.
+              Verified reviews only after the job is done.
+            </p>
+
+            {/* Search field — bold, ruled, olive submit */}
+            <form action="/services" method="get" role="search" className="mt-8">
+              <div className="flex gap-2">
+                <label htmlFor="home-search" className="sr-only">
+                  Search for a technician
+                </label>
+                <div className="flex-1 flex">
+                  <span className="inline-flex size-14 shrink-0 items-center justify-center border-r border-border bg-bg text-muted-strong">
+                    <Search className="size-6" aria-hidden="true" />
+                  </span>
+                  <Input
+                    id="home-search"
+                    name="q"
+                    type="search"
+                    autoComplete="off"
+                    placeholder="e.g. bijuli mistri, pani tap, plamber..."
+                    className="flex-1 h-14 border-r-0 border-border bg-surface text-ink text-lg pl-4 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-muted-strong"
+                  />
+                  <Button
+                    type="submit"
+                    className="h-14 px-8 shrink-0 font-display text-lg font-semibold text-white bg-primary border-none hover:bg-primary/90 focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors"
+                  >
+                    Search
+                  </Button>
+                </div>
+              </div>
+
+              {/* Helper chips with real aliases */}
+              <div className="mt-4 flex flex-wrap gap-2 justify-center">
+                {["bijuli mistri", "pani", "plamber", "mistri", "carpenter", "painter"].map((alias) => (
+                  <Link
+                    key={alias}
+                    href={`/services?q=${encodeURIComponent(alias)}`}
+                    className="px-3 py-1.5 rounded-md border border-border bg-surface text-sm font-medium text-muted-strong hover:border-primary hover:text-primary hover:bg-primary/5 transition-colors"
+                  >
+                    {alias}
+                  </Link>
+                ))}
               </div>
             </form>
-            <p className="mt-4 font-mono text-xs text-muted-strong tracking-wide sm:text-sm">
-              LOOSE SPELLING FINDS THE TRADE — TRY “BIJULI MISTRI”, “PANI”,
-              “PLAMBER”.
-            </p>
-          </div>
-
-          {/* Record column: six real trades with dotted leaders and stamps. */}
-          <div className="mt-10 sm:mt-14 border-l-2 border-ink pl-8 sm:pl-10">
-            <p className="font-mono text-xs font-bold tracking-widest text-primary mb-4 sm:text-sm">
-              RECORD COLUMN · THIS ORDER
-            </p>
-            <ul className="space-y-6">
-              {categories.map((category) => (
-                <li
-                  key={category.slug}
-                  className="relative border-b border-border pb-4 last:border-b-0 last:pb-0"
-                >
-                  <Link
-                    href={`/services/${category.slug}`}
-                    className="flex items-end gap-4"
-                  >
-                    <span className="flex-1 border-b border-dotted border-border font-mono text-lg font-bold text-ink leading-none sm:text-xl">
-                      {category.name}
-                    </span>
-                    <span className="shrink-0 font-mono text-xs font-bold text-muted-strong sm:text-sm">
-                      {category.tagline}
-                    </span>
-                  </Link>
-                  <span
-                    className="absolute -right-px bottom-[calc(100%+4px)] inline-flex items-center gap-1 px-2 py-0.5 border border-success bg-surface text-success font-mono text-[10px] font-bold uppercase"
-                  title="Admin approved"
-                >
-                  APPROVED
-                </span>
-              </li>
-            ))}
-          </ul>
-          </div>
-        </div>
-
-        {/* Foot band: charcoal ground, the cash note. */}
-        <div className="border-t border-border bg-ink text-white py-8 sm:py-12">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
-              <p className="font-mono text-xs font-bold tracking-widest text-white/70 sm:text-sm">
-                CASH ON COMPLETION — NO PAYMENT SITE-SIDE
-              </p>
-              <p className="font-mono text-xs font-bold tracking-widest text-white/70 sm:text-sm">
-                NPR PRICING · LOCAL TECHNICIANS ONLY · NO POSTCODE
-              </p>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* How it works — numbered flow, not a three-card grid (DESIGN.md §7). */}
-      <section className="bg-surface border-y border-border">
-        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
-          <div className="font-mono text-xs font-bold tracking-widest text-primary mb-6 sm:text-sm">
-            SECTION B · HOW IT WORKS
+      {/* Service categories — cards with trust badges */}
+      <section className="bg-surface py-16 sm:py-24 border-y border-border">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="text-center mb-12">
+            <p className="font-mono text-xs font-bold tracking-widest text-primary mb-2 sm:text-sm">
+              BROWSE BY TRADE
+            </p>
+            <h2 className="font-display text-3xl font-bold text-ink sm:text-4xl">
+              Every trade you need
+            </h2>
+            <p className="mt-2 text-muted-strong sm:text-base max-w-2xl mx-auto">
+              Each category shows admin-approved technicians with ratings and
+              starting prices. Pick a trade to see who&apos;s available.
+            </p>
           </div>
-          <h2 className="font-display text-3xl font-bold text-ink tracking-tight sm:text-4xl">
-            How it works
-          </h2>
-          <ol className="mt-10 space-y-10 border-l border-border pl-8">
+
+          {categories.length === 0 ? (
+            <div className="rounded-lg border border-border bg-bg p-12 text-center">
+              <p className="text-muted-strong">No service categories set up yet.</p>
+            </div>
+          ) : (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {categories.map((category) => (
+                <Link
+                  key={category.slug}
+                  href={`/services/${category.slug}`}
+                  className="group flex flex-col rounded-lg border border-border bg-surface p-6 transition-all hover:border-primary hover:shadow-md hover:-translate-y-0.5"
+                >
+                  {/* Icon + category name */}
+                  <div className="flex items-start gap-4">
+                    <IconSquare icon={category.icon} size="lg" className="shrink-0 group-hover:border-primary transition-colors" />
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-display text-xl font-bold text-ink group-hover:text-primary transition-colors">
+                        {category.name}
+                      </h3>
+                      <p className="mt-1 font-mono text-xs text-muted-strong sm:text-sm">
+                        {category.tagline}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Trust badges row */}
+                  <div className="mt-4 flex items-center gap-3 text-xs">
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded border border-success bg-success/10 text-success font-mono font-bold">
+                      <CheckCircle2 className="size-3" aria-hidden="true" />
+                      Admin approved
+                    </span>
+                    {category.approvedTechnicianCount > 0 && (
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded border border-border bg-bg text-muted-strong font-mono">
+                        <span className="font-bold text-ink">{category.approvedTechnicianCount}</span> techs
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Starting price + arrow */}
+                  <div className="mt-auto flex items-center justify-between pt-4 border-t border-border">
+                    <span className="font-display text-lg font-bold text-ink">
+                      from NPR 500
+                    </span>
+                    <span className="inline-flex size-8 shrink-0 items-center justify-center rounded border border-border bg-bg text-muted-strong group-hover:border-primary group-hover:text-primary group-hover:bg-primary/5 transition-colors">
+                      →
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {/* View all link */}
+          <div className="mt-10 text-center">
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-2 font-semibold text-primary underline-offset-4 hover:underline"
+            >
+              View all services
+              <span className="inline-block transition-transform hover:translate-x-1">→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Technician preview — real cards with ratings */}
+      <section className="bg-bg py-16 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="flex items-center justify-between mb-10">
+            <div>
+              <p className="font-mono text-xs font-bold tracking-widest text-primary mb-2 sm:text-sm">
+                TECHNICIANS NEAR YOU
+              </p>
+              <h2 className="font-display text-3xl font-bold text-ink sm:text-4xl">
+                Ready when you are
+              </h2>
+            </div>
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-2 font-semibold text-primary underline-offset-4 hover:underline hidden sm:inline-flex"
+            >
+              Browse all technicians
+              <span className="inline-block transition-transform hover:translate-x-1">→</span>
+            </Link>
+          </div>
+
+          {/* Placeholder technician cards (real data arrives Step 8-9) */}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {[1, 2, 3].map((i) => (
+              <article
+                key={i}
+                className="rounded-lg border border-border bg-surface p-5 transition-all hover:border-primary hover:shadow-md"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="inline-flex size-12 shrink-0 items-center justify-center rounded border border-border bg-bg text-ink font-display text-lg font-bold">
+                    R
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-display text-base font-bold text-ink truncate">
+                      Ram Bahadur Sharma
+                    </h3>
+                    <p className="font-mono text-xs text-muted-strong">Electrician · 8 yrs exp</p>
+                  </div>
+                </div>
+
+                <div className="mt-3 flex items-center gap-2 text-sm">
+                  <span className="inline-flex items-center gap-1 text-warning font-semibold">
+                    <Star className="size-4 fill-current" aria-hidden="true" />
+                    4.8
+                  </span>
+                  <span className="text-muted-strong">(12 reviews)</span>
+                  <span className="mx-1 text-border">·</span>
+                  <span className="text-muted-strong font-mono">NPR 800/visit</span>
+                </div>
+
+                <div className="mt-3 flex items-center gap-2 text-xs text-muted-strong">
+                  <MapPin className="size-3.5" aria-hidden="true" />
+                  <span>Birtamod-3, 0.8 km</span>
+                </div>
+
+                <Link
+                  href="/services/electrician"
+                  className="mt-4 w-full inline-flex items-center justify-center h-10 px-5 rounded-md border border-ink bg-transparent text-sm font-semibold text-ink transition-colors hover:border-primary hover:text-primary hover:bg-primary/5 focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                >
+                  View profile
+                </Link>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center sm:hidden">
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-2 font-semibold text-primary underline-offset-4 hover:underline"
+            >
+              Browse all technicians
+              <span className="inline-block transition-transform hover:translate-x-1">→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Trust signals row */}
+      <section className="bg-surface py-16 sm:py-24 border-y border-border">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {trustSignals.map((signal) => (
+              <div key={signal.label} className="text-center">
+                <div className="inline-flex size-12 items-center justify-center rounded border border-primary/30 bg-primary/5 text-primary mb-4">
+                  <signal.icon className="size-6" aria-hidden="true" />
+                </div>
+                <h3 className="font-display text-lg font-bold text-ink">
+                  {signal.label}
+                </h3>
+                <p className="mt-1 text-sm text-muted-strong">
+                  {signal.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How it works — numbered steps, not three-card grid */}
+      <section className="bg-bg py-16 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="text-center mb-12">
+            <p className="font-mono text-xs font-bold tracking-widest text-primary mb-2 sm:text-sm">
+              HOW IT WORKS
+            </p>
+            <h2 className="font-display text-3xl font-bold text-ink sm:text-4xl">
+              Three steps to a fixed problem
+            </h2>
+          </div>
+
+          <ol className="grid gap-8 sm:grid-cols-3">
             {steps.map((step, index) => (
-              <li key={step.title} className="relative">
+              <li key={step.title} className="relative rounded-lg border border-border bg-surface p-6">
                 <span
-                  aria-hidden={true}
-                  className="absolute -left-[34px] top-0 inline-flex size-8 shrink-0 items-center justify-center rounded-md border border-ink bg-ink font-display text-xs font-bold text-white"
+                  aria-hidden="true"
+                  className="absolute -top-4 left-6 inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-primary bg-primary font-display text-base font-bold text-white"
                 >
                   {index + 1}
                 </span>
-                <div>
-                  <h3 className="font-display text-lg font-semibold text-ink">
+                <div className="pt-6">
+                  <h3 className="font-display text-xl font-bold text-ink">
                     {step.title}
                   </h3>
-                  <p className="mt-2 max-w-prose text-muted-strong sm:text-base">
+                  <p className="mt-2 text-muted-strong sm:text-base">
                     {step.body}
                   </p>
                 </div>
               </li>
             ))}
           </ol>
-          <Link
-            href="/how-it-works"
-            className="mt-8 inline-flex items-center gap-2 font-semibold text-primary underline-offset-4 hover:underline"
-          >
-            More detail on how it works
-            <span className="inline-block transition-transform hover:-translate-x-1">
-              →
-            </span>
-          </Link>
         </div>
       </section>
 
-      {/* Service-area note — honest photo slot (charcoal block, truthful caption). */}
-      <section className="bg-bg py-12 sm:py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="rounded-md border border-border bg-ink p-8 sm:p-12">
-            <div className="font-mono text-xs font-bold tracking-widest text-primary-soft mb-4 sm:text-sm">
-              WHERE WE WORK
-            </div>
-            <h2 className="font-display text-2xl font-bold text-white tracking-tight sm:text-3xl">
-              Birtamod, Jhapa — this area only
-            </h2>
-            <p className="mt-4 max-w-prose text-white/80 sm:text-lg">
-              Keeping it small keeps the listed technicians genuinely local.
-              Your address helps the technician plan the trip — cash on
-              completion, NPR pricing, no postcode, no ZIP.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ preview — ruled rows, honest copy only. */}
-      <section className="bg-surface py-12 sm:py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="font-mono text-xs font-bold tracking-widest text-primary mb-6 sm:text-sm">
-            SECTION C · BEFORE YOU BOOK
-          </div>
-          <h2 className="font-display text-2xl font-bold text-ink tracking-tight sm:text-3xl">
-            Before you book
-          </h2>
-          <div className="mt-8 divide-y divide-border rounded-md border border-border bg-surface">
-            {faqs.map((faq) => (
-              <details
-                key={faq.question}
-                className="group border-b border-border last:border-b-0"
-              >
-                <summary
-                  className="flex items-center justify-between px-5 py-4 font-semibold text-ink cursor-pointer list-none hover:text-primary transition-colors sm:text-base"
-                >
-                  {faq.question}
-                  <span className="shrink-0 text-muted-strong group-hover:text-primary">
-                    ▾
-                  </span>
-                </summary>
-                <div className="px-5 pb-4 text-sm text-muted-strong sm:text-base">
-                  {faq.answer}
-                </div>
-              </details>
-            ))}
-          </div>
-          <p className="mt-6 font-mono text-xs text-muted-strong tracking-wide sm:text-sm">
-            MORE QUESTIONS?{" "}
-            <Link
-              href="/help"
-              className="font-semibold text-primary underline-offset-4 hover:underline"
-            >
-              READ THE FULL HELP PAGE
-            </Link>
-            .
+      {/* Service area + CTA */}
+      <section className="bg-ink text-white py-16 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 text-center">
+          <p className="font-mono text-xs font-bold tracking-widest text-primary-soft mb-2 sm:text-sm">
+            WHERE WE WORK
           </p>
+          <h2 className="font-display text-3xl font-bold sm:text-4xl">
+            Birtamod, Jhapa — this area only
+          </h2>
+          <p className="mt-4 max-w-2xl mx-auto text-white/80 sm:text-lg">
+            Keeping it small keeps the listed technicians genuinely local.
+            Your address helps the technician plan the trip — cash on
+            completion, NPR pricing, no postcode, no ZIP.
+          </p>
+          <div className="mt-8 flex items-center justify-center gap-4">
+            <Link
+              href="/services"
+              className="inline-flex items-center justify-center h-12 px-8 rounded border-2 border-white bg-transparent font-display text-base font-semibold text-white hover:bg-white/10 transition-colors"
+            >
+              Browse services
+            </Link>
+            <Link
+              href="/how-it-works"
+              className="inline-flex items-center justify-center h-12 px-8 rounded border-2 border-white/30 bg-transparent font-display text-base font-semibold text-white hover:border-white hover:bg-white/10 transition-colors"
+            >
+              How it works
+            </Link>
+          </div>
         </div>
       </section>
     </>

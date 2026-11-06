@@ -16,6 +16,7 @@ export interface CategorySummary {
   name: string;
   tagline: string;
   icon: string;
+  approvedTechnicianCount: number;
 }
 
 export interface CategoryDetail extends CategorySummary {
@@ -30,9 +31,19 @@ export async function listCategories(): Promise<CategorySummary[]> {
   "use cache";
   cacheTag(CATEGORIES_TAG);
   const { rows } = await query<CategorySummary>(
-    `SELECT slug, name, tagline, icon
-       FROM service_categories
-      ORDER BY name`,
+    `SELECT c.slug,
+            c.name,
+            c.tagline,
+            c.icon,
+            COALESCE(t.approved_count, 0)::int AS "approvedTechnicianCount"
+       FROM service_categories c
+       LEFT JOIN (
+         SELECT category_id, count(*)::int AS approved_count
+           FROM technician_profiles
+          WHERE approval_status = 'approved'
+          GROUP BY category_id
+       ) t ON t.category_id = c.id
+      ORDER BY c.name`,
   );
   return rows;
 }

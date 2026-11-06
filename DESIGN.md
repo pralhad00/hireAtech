@@ -1,18 +1,19 @@
-# DESIGN.md — HireATech visual system
+# DESIGN.md — HireATech visual system (Job Sheet world)
 
 > **Authority order:** `spec.md §11` > this file > any generic design advice
 > (including the impeccable tool). §11 was **amended Nov 2026
 > (owner-approved)** from the terracotta "warm workshop" system to the
-> **Industrial Modernism** system below. This file is the full design
-> contract, not a description of built code; drift discovered while building
-> gets folded back here rather than being tolerated in code.
+> **Industrial Modernism / Job Sheet** system below. This file is the full
+> design contract, not a description of built code; drift discovered while
+> building gets folded back here rather than being tolerated in code.
 
-## 1. Personality — Industrial Modernism
+## 1. Personality — Job Sheet Industrial Modernism
 
 A rugged, modern, professional service brand — like an established trades
-company's identity, not a generic SaaS application and not a startup landing
-page. The interface communicates reliability, professionalism, simplicity,
-and a strong visual identity; visually bold without becoming complicated.
+company's carbon-copy work order, not a generic SaaS application and not a
+startup landing page. The interface communicates reliability, professionalism,
+simplicity, and a strong visual identity; visually bold without becoming
+complicated.
 
 - Strong typography does the branding work; decoration does not exist.
 - Sharp borders (1px, 0–4px corners), solid surfaces, structured grids.
@@ -20,6 +21,8 @@ and a strong visual identity; visually bold without becoming complicated.
   floating decorative elements, excessive blur, pill shapes, excessive
   rounding, tricks from the previous terracotta system (see §13).
 - Depth comes from contrast, alignment, type and composition — never shadows.
+- The site **is** a work order: serial numbers, ruled fields, margin rules,
+  rubber-stamp approval marks, station-by-station flow.
 
 ## 2. Color tokens (spec §11 — binding)
 
@@ -28,7 +31,7 @@ and a strong visual identity; visually bold without becoming complicated.
 | Token | Value | Use |
 |---|---|---|
 | primary | `#414A2F` | Olive green — brand color, buttons, important elements |
-| bg | `#F2F0E8` | Warm off-white — dominant page background |
+| bg | `#F2F0E8` | Warm off-white — dominant page background (ruled paper) |
 | ink | `#25271F` | Dark charcoal — headings, body text, dark surfaces |
 | surface | `#FFFFFF` | Cards, inputs, contrasting surfaces |
 
@@ -37,7 +40,7 @@ and a strong visual identity; visually bold without becoming complicated.
 | Token | Value | Use |
 |---|---|---|
 | primary-soft | `#68734C` | Light olive — secondary brand elements |
-| border | `#DCD9CC` | Warm borders and separators |
+| border | `#DCD9CC` | Warm borders and separators (ruled lines) |
 | muted | `#77786F` | Large labels (≥18px bold / ≥24px) and non-essential marks only; **fails small-text AA** (≈3.9:1 on bg) |
 | muted-strong | `#5E5F57` | Small secondary text — passes AA on bg and surface |
 | bg-subtle | `#E9E7DE` | Neutral surface — subtle background variation |
@@ -46,7 +49,7 @@ and a strong visual identity; visually bold without becoming complicated.
 
 | Token | Value | Use |
 |---|---|---|
-| success | `#287A50` | Successful actions and confirmations |
+| success | `#287A50` | Successful actions and confirmations (admin-approved stamp) |
 | warning | `#B77A35` | Warnings, pending attention (e.g. a pending booking) |
 | error | `#B7443D` | Errors and destructive actions |
 
@@ -62,16 +65,19 @@ and a strong visual identity; visually bold without becoming complicated.
 ### Where olive lives (owner decision: bold public, quiet app)
 
 - **Public pages** (home, services, about, help): olive owns whole regions —
-  the hero band, primary buttons, key moments; charcoal owns the footer.
+  the search field band, primary buttons, key moments; charcoal owns the
+  footer/service-area strip.
 - **App pages** (forms, dashboards, booking flow — Steps 5–12): off-white and
   white surfaces; olive only on buttons, links and active markers.
 
 ## 3. Typography
 
-- Display/headings/navigation/buttons/brand: **Manrope** — 400/500/600/700/800.
-- Body/descriptions/forms/long paragraphs: **Plus Jakarta Sans** — 400/500/600.
-- Both self-hosted via `next/font` (no font CDN, no layout shift).
-  **Never Inter** (spec §11).
+- Display/headings/navigation/buttons: **Rajdhani** (condensed industrial
+  grotesk; weights 400/500/600/700) — narrow, tall letterforms, industrial
+  feel. Self-hosted via `next/font`.
+- Body/descriptions/forms/long text: **Plus Jakarta Sans** (weights
+  400/500/600). Self-hosted via `next/font`.
+- **Never Inter** (spec §11).
 - Large, bold, confident headings; hierarchy through size and weight; no
   decorative fonts.
 - Scale (desktop; responsive down on smaller screens):
@@ -89,15 +95,28 @@ and a strong visual identity; visually bold without becoming complicated.
 Body is 16px on mobile; secondary text never below 14px (spec §11). Measure
 targets 65–75ch for long text.
 
+Monospace stencil numerals (`font-mono`, `tracking-widest`, `font-bold`) for
+serial numbers, trade codes, and field labels — the work-order chrome.
+
 ## 4. Borders, shapes and surfaces
 
 - Prefer square corners: radius range is **0–4px** (default 2px on buttons,
   inputs, tiles). Pill buttons/containers are banned.
 - 1px solid borders in `border` `#DCD9CC` (inputs, cards, dividers); visible
   separators between sections; borders instead of shadows, everywhere.
+- **Ruled lines everywhere**: dotted leaders for trade names (`border-dotted
+  border-border`), solid rules for section breaks, margin rules on work-order
+  chrome.
 - Solid surfaces only: white, off-white, olive, charcoal. No nested-card
   stacking; don't wrap every element in a card — structure via rules and
   alignment.
+- **Occupied rows over card piles**: lists render as bordered rows —
+  initials avatar / icon left, primary name and one line on top, details
+  below; generous row padding; thumb-sized taps.
+- The "repetitive three-card layout" is banned (SaaS-template smell): the
+  homepage how-it-works is a numbered vertical flow, not three identical
+  cards; services are rows; categories are a plain grid of labelled tiles
+  without repeated icon+heading+text card anatomy.
 
 ## 5. Photography and visual assets
 
@@ -138,13 +157,11 @@ leads; illustrations don't fill; decorative graphics don't exist.
   width 1200px.
 - Structured grids over arbitrary positioning; consistent horizontal
   alignment and section rhythm across pages.
-- **Occupied rows over card piles:** lists render as bordered rows —
-  initials avatar / icon left, primary name and one line on top, details
-  below; generous row padding; thumb-sized taps.
-- The "repetitive three-card layout" is banned (SaaS-template smell): the
-  homepage how-it-works is a numbered vertical flow, not three identical
-  cards; services are rows; categories are a plain grid of labelled tiles
-  without repeated icon+heading+text card anatomy.
+- **Work-order chrome**: serial number strip, service-area band, ruled field
+  labels, margin rules, punch-hole dots — these persist across every page so
+  the site reads as a single record.
+- **Dotted-leader rows**: category/trade names with `border-b border-dotted
+  border-border` leading to the admin-approved stamp.
 
 ## 8. Motion
 
@@ -157,16 +174,17 @@ leads; illustrations don't fill; decorative graphics don't exist.
   shouldn't be the show.
 - Everything honors `prefers-reduced-motion`.
 
-## 9. Homepage — first viewport (owner choice: search-first band)
+## 9. Homepage — first viewport (Job Sheet: search as field one)
 
-1. **Olive band** (`primary`) with a centered **search box — the most
-   prominent element on the home page** (spec §11): white solid input, sharp
-   corners, charcoal text; a bold Manrope display heading above it.
-2. One helper line about forgiving search; its wording must quote **real
-   seeded aliases** (e.g. "bijuli mistri", "pani") — never invented examples
-   (spec §0: no fake proof).
-3. Six real category tiles below the band (Lucide icon + trade name), pulled
-   live from `service_categories`.
+1. **Work-order masthead** (header): serial number left, brand center, service
+   area right.
+2. **Ruled field area**: "FIELD ONE · WHAT NEEDS FIXING" label, huge
+   Rajdhani heading "Name the problem.", the search as field one (ruled input
+   with icon prefix, olive primary submit button).
+3. **Record column**: six real trades with dotted leaders and `✓ APPROVED`
+   stamp (green success token).
+4. **Foot band**: charcoal ground — "CASH ON COMPLETION — NO PAYMENT SITE-SIDE"
+   and "NPR PRICING · LOCAL TECHNICIANS ONLY · NO POSTCODE".
 
 ## 10. Component rules (spec §11 — binding)
 
@@ -176,13 +194,16 @@ leads; illustrations don't fill; decorative graphics don't exist.
   loading states. Every action button disables while working (no double
   submits).
 - Inputs: solid white/off-white background, 1px `border`, sharp corners,
-  visible label above, error text below in `error` (never colour-only);
-  validate on blur/submit; errors via `role="alert"` / `aria-live`; focus
-  moves to the first error; focus ring is a 2px olive outline, visible
-  everywhere ("browser surfaces themed: selection olive/white, focus, caret").
+  visible label above (or `sr-only` for search), error text below in `error`
+  (never colour-only); validate on blur/submit; errors via `role="alert"` /
+  `aria-live`; focus moves to the first error; focus ring is a 2px olive
+  outline, visible everywhere ("browser surfaces themed: selection olive/white,
+  focus, caret").
 - Every list and form shows loading, empty, error and success states.
 - Keyboard friendly; sensible page titles; every page keeps its own
   `metadata`.
+- **Admin-approved stamp**: inline flex, `success` border and text, `surface`
+  bg, monospace `text-[10px]`, uppercase — the single decisive color mark.
 
 ## 11. UX principles
 
@@ -208,15 +229,19 @@ leads; illustrations don't fill; decorative graphics don't exist.
 - No pill shapes or playful rounding; no card piles; no nested cards.
 - No decorative icons, no emoji as icons, no icon-set mixing.
 - No fake photography — empty states and photo slots are honest.
+- No centered pill-search hero, no uniform three-card stacks, no rounded
+  friendly buttons, no stock-color tagline — the tells you already named.
 
 ## 13. Migration — retired from the previous system (owner-approved)
 
 | Retired | Replacement |
 |---|---|
 | Terracotta `#E45A32` / cream `#F4F0E7` / ink `#182820` / border `#D8D2C7` / muted `#667568` / error `#B42318` / success `#28734A` | Section 2 palette |
-| Bitter (slab serif display) + Work Sans | Manrope + Plus Jakarta Sans |
+| Bitter (slab serif display) + Work Sans | Rajdhani (condensed grotesk) + Plus Jakarta Sans |
 | Radii 2–8px | 0–4px, square-leaning |
 | Icon squares (hand-drawn SVG set in bordered squares) | Bordered 4px-radius tiles with Lucide 24px icons, uppercase-style trade label |
 | One orchestrated homepage reveal | No entrance animations at all |
 | `background: primary` buttons with terracotta hover | Olive buttons, hover darkened via `ink` overlay (no invented color) |
 | "Calm workshop" personality copy patterns | Industrial Modernism tone: direct, professional, plain |
+| Centered hero tagline + search pill | Work-order masthead + ruled field one + record column |
+| Uniform three-card feature grid | Numbered station flow, dotted-leader rows |

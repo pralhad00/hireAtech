@@ -19,16 +19,18 @@ export function IconSquare({
   icon,
   size = "md",
   tone = "cream",
+  className,
 }: {
   icon: string;
   size?: Size;
   tone?: "cream" | "surface";
+  className?: string;
 }) {
   return (
     <span
-      className={`inline-flex shrink-0 items-center justify-center rounded-lg border border-border text-primary ${
+      className={`inline-flex shrink-0 items-center justify-center rounded-md border border-border text-primary ${
         tone === "cream" ? "bg-bg" : "bg-surface"
-      } ${sizeBox[size]}`}
+      } ${sizeBox[size]} ${className || ""}`}
     >
       <CategoryIcon icon={icon} />
     </span>

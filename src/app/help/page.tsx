@@ -1,10 +1,14 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 /*
- * /help — honest FAQ (spec route table). Every answer states what the spec
- * guarantees; where contact support doesn't exist yet, that is said plainly.
- * Ruled rows, no invented phone numbers, no 24/7 promises.
+ * /help — honest FAQ. Marketplace Platform: ruled accordions, no fake promises.
  */
 
 export const metadata: Metadata = {
@@ -54,37 +58,31 @@ const faqs = [
 export default function HelpPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
-      <div className="font-mono text-xs font-bold tracking-widest text-primary mb-4 sm:text-sm">
-        RECORD COLUMN · HELP & FAQ
+      <div className="mb-10">
+        <p className="font-mono text-xs font-bold tracking-widest text-primary mb-2 sm:text-sm">
+          HELP & FAQ
+        </p>
+        <h1 className="font-display text-3xl font-bold text-ink sm:text-4xl">
+          Help & FAQ
+        </h1>
+        <p className="mt-2 max-w-prose text-muted-strong sm:text-base">
+          Straight answers about how HireATech behaves. Nothing here is a
+          promise of a feature — it describes what works today.
+        </p>
       </div>
-      <h1 className="font-display text-3xl font-bold text-ink tracking-tight sm:text-4xl">
-        Help &amp; FAQ
-      </h1>
-      <p className="mt-2 max-w-prose text-muted-strong sm:text-base">
-        Straight answers about how HireATech behaves. Nothing here is a
-        promise of a feature — it describes what works today.
-      </p>
 
-      <div className="mt-10 space-y-6 border-l-2 border-ink pl-8">
+      <Accordion className="border border-border rounded-lg bg-surface overflow-hidden">
         {faqs.map((faq) => (
-          <details
-            key={faq.question}
-            className="relative border-b border-border pb-6 last:border-b-0 last:pb-0"
-          >
-            <summary
-              className="flex items-center justify-between px-4 py-4 font-semibold text-ink cursor-pointer list-none hover:text-primary transition-colors sm:text-base"
-            >
+          <AccordionItem key={faq.question} value={faq.question}>
+            <AccordionTrigger className="flex items-center justify-between px-5 py-4 font-semibold text-ink hover:bg-bg transition-colors sm:text-base border-b last:border-b-0">
               {faq.question}
-              <span className="shrink-0 text-muted-strong group-hover:text-primary">
-                ▾
-              </span>
-            </summary>
-            <div className="px-4 pb-4 text-sm text-muted-strong sm:text-base">
+            </AccordionTrigger>
+            <AccordionContent className="px-5 pb-4 text-sm text-muted-strong sm:text-base">
               {faq.answer}
-            </div>
-          </details>
+            </AccordionContent>
+          </AccordionItem>
         ))}
-      </div>
+      </Accordion>
 
       <p className="mt-10 max-w-prose text-sm text-muted-strong sm:text-base">
         New to the flow?{" "}

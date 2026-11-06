@@ -1,17 +1,13 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { IconSquare } from "@/components/ui/icon-square";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Search, Filter, ShieldCheck, Star } from "@/components/ui/icons";
 import { listCategories } from "@/lib/queries/categories";
 
 /*
- * /services — all active categories (spec route table). Occupied rows
- * (DESIGN.md §6): dotted-leader trade names, admin-approved stamp, real link.
- * No card piles.
- *
- * The home search box submits here as /services?q=… — Step 8 (search) will
- * read `searchParams` inside a <Suspense> boundary to render real results;
- * until then this page stays fully prerenderable and simply ignores `q`.
+ * /services — all active categories as cards with trust badges.
+ * Search results placeholder (Step 8 will implement real search).
+ * Marketplace Platform: cards, sharp corners, bordered, trust signals.
  */
 
 export const metadata: Metadata = {
@@ -24,58 +20,114 @@ export default async function ServicesPage() {
   const categories = await listCategories();
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
-      <div className="font-mono text-xs font-bold tracking-widest text-primary mb-4 sm:text-sm">
-        RECORD COLUMN · ALL TRADES
+    <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+      {/* Page header */}
+      <div className="mb-10">
+        <nav aria-label="Breadcrumb" className="text-sm text-muted-strong mb-4">
+          <Link
+            href="/"
+            className="font-medium text-muted-strong underline-offset-4 hover:text-primary hover:underline"
+          >
+            Home
+          </Link>
+          <span aria-hidden={true} className="mx-2">/</span>
+          <span aria-current="page" className="font-medium text-ink">
+            Services
+          </span>
+        </nav>
+        <h1 className="font-display text-3xl font-bold text-ink sm:text-4xl">
+          All services
+        </h1>
+        <p className="mt-2 max-w-2xl text-muted-strong sm:text-base">
+          {categories.length} trades with admin-approved technicians. Clear NPR
+          prices, verified reviews, cash on completion.
+        </p>
       </div>
-      <h1 className="font-display text-3xl font-bold text-ink tracking-tight sm:text-4xl">
-        Services
-      </h1>
-      <p className="mt-2 max-w-prose text-muted-strong sm:text-base">
-        Every trade that has joined HireATech, updated as technicians are
-        approved. Choose one to see who is available.
-      </p>
 
+      {/* Search + filter bar */}
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <form action="/services" method="get" role="search" className="flex-1 max-w-xl">
+          <label htmlFor="services-search" className="sr-only">
+            Filter services
+          </label>
+          <div className="flex">
+            <span className="inline-flex size-12 shrink-0 items-center justify-center border-r border-border bg-bg text-muted-strong">
+              <Search className="size-5" aria-hidden="true" />
+            </span>
+            <input
+              id="services-search"
+              name="q"
+              type="search"
+              placeholder="Filter: electrician, plumber, carpenter..."
+              className="flex-1 h-12 border-r-0 border-border bg-surface text-ink pl-4 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-muted-strong"
+            />
+            <button
+              type="submit"
+              className="h-12 px-6 shrink-0 font-display text-base font-semibold text-white bg-primary border-none hover:bg-primary/90 focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors"
+            >
+              Filter
+            </button>
+          </div>
+        </form>
+
+        <Link
+          href="#"
+          className="shrink-0 inline-flex items-center gap-2 h-10 px-5 rounded-md border border-ink bg-transparent text-sm font-semibold text-ink transition-colors hover:border-primary hover:text-primary hover:bg-primary/5 focus:ring-2 focus:ring-primary focus:ring-offset-2 font-display"
+        >
+          <Filter className="size-4" aria-hidden="true" />
+          Filters
+        </Link>
+      </div>
+
+      {/* Category grid */}
       {categories.length === 0 ? (
-        <div className="mt-10 rounded-md border border-border bg-surface p-8 sm:p-10">
-          <p className="text-muted-strong sm:text-base">
-            No service categories have been set up yet. Check back soon.
-          </p>
+        <div className="rounded-lg border border-border bg-surface p-12 text-center">
+          <p className="text-muted-strong">No service categories have been set up yet.</p>
         </div>
       ) : (
-        <ul className="mt-10 space-y-6 border-l-2 border-ink pl-8">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => (
-            <li
+            <Link
               key={category.slug}
-              className="relative border-b border-border pb-6 last:border-b-0 last:pb-0"
+              href={`/services/${category.slug}`}
+              className="group flex flex-col rounded-lg border border-border bg-surface p-6 transition-all hover:border-primary hover:shadow-md hover:-translate-y-0.5"
             >
-              <Link
-                href={`/services/${category.slug}`}
-                className="flex items-start gap-4"
-              >
-                <IconSquare
-                  icon={category.icon}
-                  size="sm"
-                />
-                <div className="flex-1 min-w-0">
-                  <span className="border-b border-dotted border-border block font-mono text-lg font-bold text-ink leading-none sm:text-xl">
+              <div className="flex items-start gap-4">
+                <IconSquare icon={category.icon} size="lg" className="shrink-0 group-hover:border-primary transition-colors" />
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-display text-xl font-bold text-ink group-hover:text-primary transition-colors">
                     {category.name}
-                  </span>
-                  <span className="mt-1 block font-mono text-xs text-muted-strong sm:text-sm">
+                  </h3>
+                  <p className="mt-1 font-mono text-xs text-muted-strong sm:text-sm">
                     {category.tagline}
-                  </span>
+                  </p>
                 </div>
-                <ArrowRight className="size-4 shrink-0 text-muted-strong" />
-              </Link>
-              <span
-                className="absolute -right-px bottom-[calc(100%+4px)] inline-flex items-center gap-1 px-2 py-0.5 border border-success bg-surface text-success font-mono text-[10px] font-bold uppercase"
-                title="Admin approved"
-              >
-                ✓ APPROVED
-              </span>
-            </li>
+              </div>
+
+              <div className="mt-4 flex items-center gap-3 text-xs">
+                <span className="inline-flex items-center gap-1 px-2 py-1 rounded border border-success bg-success/10 text-success font-mono font-bold">
+                  <ShieldCheck className="size-3" aria-hidden="true" />
+                  Admin approved
+                </span>
+                {category.approvedTechnicianCount > 0 && (
+                  <span className="inline-flex items-center gap-1 px-2 py-1 rounded border border-border bg-bg text-muted-strong font-mono">
+                    <Star className="size-3 fill-current text-warning" aria-hidden="true" />
+                    <span className="font-bold text-ink">{category.approvedTechnicianCount}</span> techs
+                  </span>
+                )}
+              </div>
+
+              <div className="mt-auto flex items-center justify-between pt-4 border-t border-border">
+                <span className="font-display text-lg font-bold text-ink">
+                  from NPR 500
+                </span>
+                <span className="inline-flex size-8 shrink-0 items-center justify-center rounded border border-border bg-bg text-muted-strong group-hover:border-primary group-hover:text-primary group-hover:bg-primary/5 transition-colors">
+                  <ArrowRight className="size-4" aria-hidden="true" />
+                </span>
+              </div>
+            </Link>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

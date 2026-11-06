@@ -1,13 +1,22 @@
 import {
   ArrowRight,
   Axe,
+  Building2,
   Check,
+  CheckCircle2,
+  Clock,
+  CreditCard,
   Droplet,
+  Filter,
   Hammer,
+  MapPin,
   Menu,
   Paintbrush,
   Plug,
   Search,
+  ShieldCheck,
+  Star,
+  Users,
   X,
   Zap,
 } from "lucide-react";
@@ -43,4 +52,4 @@ export function CategoryIcon({ icon, ...props }: CategoryIconProps) {
   return <Named aria-hidden={true} {...props} />;
 }
 
-export { ArrowRight, Check, Menu, Search, X };
+export { ArrowRight, Building2, Check, CheckCircle2, Clock, CreditCard, Filter, MapPin, Menu, Search, ShieldCheck, Star, Users, X };

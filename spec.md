@@ -102,7 +102,7 @@ One `users` table with a `role` column: `customer`, `technician`, `admin`.
 | **ESLint** | Comes with Next.js; catches bad patterns |
 
 - Use the versions that are current when scaffolding. Do not add UI kits beyond **shadcn/ui** (amended), state libraries (Redux, Zustand), auth libraries (Auth.js, Better Auth, Passport) or any ORM. (`lucide-react` is the one approved icon library, now also shadcn/ui's default icon set; `clsx`, `tailwind-merge`, `class-variance-authority` and Radix UI primitives are approved **only** as shadcn/ui's dependency family. No others.)
-- Icons: **Lucide** (`lucide-react`), used sparingly (§11). Fonts: `next/font` — Rajdhani (condensed industrial grotesk, display) plus Plus Jakarta Sans (body); **not Inter**.
+- Icons: **Lucide** (`lucide-react`), used sparingly (§11). Fonts: `next/font` — Space Grotesk (geometric grotesk, display) plus Plus Jakarta Sans (body); **not Inter**.
 - State: React state and small Context only where needed (e.g. booking stepper). Server data comes from Server Components and Server Actions.
 
 ### 3.1 How the browser talks to the server
@@ -622,7 +622,7 @@ never colour-only.
 
 ### Typography
 
-- Display/headings/navigation/buttons: **Rajdhani** (condensed industrial grotesk; weights 400/500/600/700) — narrow, tall letterforms, industrial feel.
+- Display/headings/navigation/buttons: **Space Grotesk** (geometric grotesk; weights 400/500/600/700) — sharp, technical, marketplace-native; wide uppercase for impact.
 - Body/descriptions/forms/long text: **Plus Jakarta Sans** (weights 400/500/600).
 - Both self-hosted via `next/font` — no font CDN. **Never Inter.**
 - Large, bold, confident headings; hierarchy via size and weight.
