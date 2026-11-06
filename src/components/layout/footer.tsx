@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 /*
  * Marketplace Platform footer — clean, sharp corners, honest content.
@@ -30,12 +31,13 @@ export function SiteFooter() {
         {/* Top strip: brand + serial */}
         <div className="flex items-center justify-between gap-4 border-b border-white/15 pb-4 mb-6 font-mono text-xs font-bold tracking-widest text-white/70 sm:text-sm">
           <div className="flex items-center gap-2">
-            <span className="inline-flex size-6 shrink-0 items-center justify-center rounded-md border border-white/30 bg-surface font-sans text-[10px] font-bold text-ink">
-              H
-            </span>
-            <span className="font-display text-lg font-bold tracking-tighter sm:text-xl">
-              HireATech
-            </span>
+            <Image
+              src="/logo-footer.png"
+              alt="HireATech"
+              width={1154}
+              height={212}
+              className="h-5 w-auto sm:h-6"
+            />
           </div>
           <span>HM-BTM-000481</span>
         </div>

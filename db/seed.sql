@@ -14,7 +14,7 @@ VALUES
    'Plumber',
    'Leaks, taps, pipes and drainage',
    'Fixes leaks, blocked drains, taps, toilets and tanks, and installs or repairs pipes.',
-   'droplet'),
+   'wrench'),
   ('carpenter',
    'Carpenter',
    'Doors, windows and woodwork',

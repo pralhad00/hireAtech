@@ -48,7 +48,7 @@ export default async function CategoryPage({
 
       {/* Category header */}
       <div className="mb-10 flex items-start gap-4">
-        <IconSquare icon={category.icon} size="lg" />
+        <IconSquare icon={category.icon} />
         <div className="min-w-0 flex-1">
           <h1 className="font-display text-3xl font-bold text-ink sm:text-4xl">
             {category.name}

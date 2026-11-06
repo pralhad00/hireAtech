@@ -124,7 +124,7 @@ export default async function HomePage() {
                 >
                   {/* Icon + category name */}
                   <div className="flex items-start gap-4">
-                    <IconSquare icon={category.icon} size="lg" className="shrink-0 group-hover:border-primary transition-colors" />
+                    <IconSquare icon={category.icon} />
                     <div className="min-w-0 flex-1">
                       <h3 className="font-display text-xl font-bold text-ink group-hover:text-primary transition-colors">
                         {category.name}

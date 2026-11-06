@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" aria-hidden="true" focusable="false">
+  <style>
+    :root {
+      --icon-light: #68734c;
+      --icon-shade: #414a2f;
+      --icon-dark: #414a2f;
+      --icon-darker: #25271f;
+    }
+  </style>
+  <defs>
+    <clipPath id="bulb-clip">
+      <circle cx="32" cy="25" r="21"/>
+    </clipPath>
+  </defs>
+
+  <!-- Bulb: shaded base, lit face offset toward top-left for a rounded, 3D feel -->
+  <circle cx="32" cy="25" r="21" fill="var(--icon-shade, #414a2f)"/>
+  <g clip-path="url(#bulb-clip)">
+    <circle cx="28.5" cy="21.5" r="19" fill="var(--icon-light, #68734c)"/>
+  </g>
+
+  <!-- Neck: lit left, shaded right -->
+  <rect x="22" y="36" width="20" height="10" rx="2" fill="var(--icon-shade, #414a2f)"/>
+  <rect x="22" y="36" width="13" height="10" rx="2" fill="var(--icon-light, #68734c)"/>
+
+  <!-- Screw base with a ridge and dark tip -->
+  <rect x="24" y="48" width="16" height="6" rx="2" fill="var(--icon-light, #68734c)"/>
+  <rect x="24" y="51" width="16" height="2" fill="var(--icon-shade, #414a2f)"/>
+  <rect x="27" y="55" width="10" height="5" rx="2.5" fill="var(--icon-dark, #414a2f)"/>
+
+  <!-- Lightning bolt: folded into two facets -->
+  <polygon points="35,10 24,28 31,28 28,40 40,21 33,21" fill="var(--icon-dark, #414a2f)" stroke="var(--icon-dark, #414a2f)" stroke-width="2" stroke-linejoin="round"/>
+  <polygon points="35,10 33,21 40,21 28,40" fill="var(--icon-darker, #25271f)" stroke="var(--icon-darker, #25271f)" stroke-width="2" stroke-linejoin="round"/>
+</svg>
