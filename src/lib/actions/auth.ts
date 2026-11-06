@@ -40,7 +40,7 @@ export async function registerAction(input: RegisterInput): Promise<ActionResult
   const passwordHash = await hashPassword(password);
 
   // Create user (role = customer)
-  const user = await createUser({ email, passwordHash, name, phone, role: "customer" });
+  const user = await createUser({ email, passwordHash, fullName: name, phone, role: "customer" });
 
   // Create session
   await createUserSession(user.id);

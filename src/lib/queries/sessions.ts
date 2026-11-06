@@ -3,7 +3,6 @@ import { query } from "../db";
 import { createHash } from "crypto";
 
 export interface SessionRow {
-  id: string;
   user_id: string;
   token_hash: string;
   expires_at: Date;
@@ -30,7 +29,7 @@ export async function createSession(
   const result = await query<SessionRow>(
     `INSERT INTO sessions (user_id, token_hash, expires_at)
      VALUES ($1, $2, $3)
-     RETURNING id, user_id, token_hash, expires_at, created_at`,
+     RETURNING user_id, token_hash, expires_at, created_at`,
     [userId, tokenHash, expiresAt],
   );
   return result.rows[0];
@@ -45,7 +44,7 @@ export async function findSessionWithUser(token: string): Promise<{
   user: {
     id: string;
     email: string;
-    name: string;
+    full_name: string;
     phone: string;
     role: "customer" | "technician" | "admin";
     is_blocked: boolean;
@@ -55,13 +54,13 @@ export async function findSessionWithUser(token: string): Promise<{
   const result = await query<SessionRow & {
     user_id: string;
     email: string;
-    name: string;
+    full_name: string;
     phone: string;
     role: "customer" | "technician" | "admin";
     is_blocked: boolean;
   }>(
-    `SELECT s.id, s.user_id, s.token_hash, s.expires_at, s.created_at,
-            u.email, u.name, u.phone, u.role, u.is_blocked
+    `SELECT s.user_id, s.token_hash, s.expires_at, s.created_at,
+            u.email, u.full_name, u.phone, u.role, u.is_blocked
      FROM sessions s
      JOIN users u ON u.id = s.user_id
      WHERE s.token_hash = $1 AND s.expires_at > now()`,
@@ -69,10 +68,10 @@ export async function findSessionWithUser(token: string): Promise<{
   );
   const row = result.rows[0];
   if (!row) return null;
-  const { email, name, phone, role, is_blocked, ...session } = row;
+  const { email, full_name, phone, role, is_blocked, ...session } = row;
   return {
     session,
-    user: { id: row.user_id, email, name, phone, role, is_blocked },
+    user: { id: row.user_id, email, full_name, phone, role, is_blocked },
   };
 }
 

@@ -69,8 +69,8 @@ export async function createUserSession(userId: string): Promise<{ token: string
  * Returns { session, user } if valid, null otherwise.
  */
 export async function validateSession(): Promise<{
-  session: { id: string; user_id: string; expires_at: Date };
-  user: { id: string; email: string; name: string; phone: string; role: "customer" | "technician" | "admin"; is_blocked: boolean };
+  session: { token_hash: string; user_id: string; expires_at: Date };
+  user: { id: string; email: string; full_name: string; phone: string; role: "customer" | "technician" | "admin"; is_blocked: boolean };
 } | null> {
   const token = await getSessionToken();
   if (!token) return null;
@@ -82,7 +82,7 @@ export async function validateSession(): Promise<{
   if (user.is_blocked) return null;
 
   return {
-    session: { id: session.id, user_id: session.user_id, expires_at: session.expires_at },
+    session: { token_hash: session.token_hash, user_id: session.user_id, expires_at: session.expires_at },
     user,
   };
 }

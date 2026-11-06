@@ -5,7 +5,7 @@ export interface UserRow {
   id: string;
   email: string;
   password_hash: string;
-  name: string;
+  full_name: string;
   phone: string;
   role: "customer" | "technician" | "admin";
   is_blocked: boolean;
@@ -17,7 +17,7 @@ export interface UserRow {
 export interface CreateUserParams {
   email: string;
   passwordHash: string;
-  name: string;
+  fullName: string;
   phone: string;
   role: "customer" | "technician" | "admin";
 }
@@ -27,7 +27,7 @@ export interface CreateUserParams {
  */
 export async function findUserByEmail(email: string): Promise<UserRow | null> {
   const result = await query<UserRow>(
-    `SELECT id, email, password_hash, name, phone, role, is_blocked,
+    `SELECT id, email, password_hash, full_name, phone, role, is_blocked,
             failed_login_attempts, locked_until, created_at
      FROM users
      WHERE lower(email) = lower($1)`,
@@ -41,7 +41,7 @@ export async function findUserByEmail(email: string): Promise<UserRow | null> {
  */
 export async function findUserById(id: string): Promise<UserRow | null> {
   const result = await query<UserRow>(
-    `SELECT id, email, password_hash, name, phone, role, is_blocked,
+    `SELECT id, email, password_hash, full_name, phone, role, is_blocked,
             failed_login_attempts, locked_until, created_at
      FROM users
      WHERE id = $1`,
@@ -55,11 +55,11 @@ export async function findUserById(id: string): Promise<UserRow | null> {
  */
 export async function createUser(params: CreateUserParams): Promise<UserRow> {
   const result = await query<UserRow>(
-    `INSERT INTO users (email, password_hash, name, phone, role)
+    `INSERT INTO users (email, password_hash, full_name, phone, role)
      VALUES ($1, $2, $3, $4, $5)
-     RETURNING id, email, password_hash, name, phone, role, is_blocked,
+     RETURNING id, email, password_hash, full_name, phone, role, is_blocked,
                failed_login_attempts, locked_until, created_at`,
-    [params.email, params.passwordHash, params.name, params.phone, params.role],
+    [params.email, params.passwordHash, params.fullName, params.phone, params.role],
   );
   return result.rows[0];
 }
