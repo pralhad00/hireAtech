@@ -1,9 +1,10 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { IconSquare } from "@/components/ui/icon-square";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Star, ShieldCheck, Clock, MapPin, CheckCircle2 } from "@/components/ui/icons";
+import { Search, Star, ShieldCheck, Clock, MapPin, ArrowRight } from "@/components/ui/icons";
 import { listCategories } from "@/lib/queries/categories";
 
 /*
@@ -35,59 +36,44 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Bold search hero — off-white ground, huge headline, ruled search */}
-      <section className="bg-bg py-16 sm:py-24">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="font-display text-5xl font-bold tracking-tight text-ink sm:text-6xl lg:text-7xl">
-              Find your{" "}
-              <span className="text-primary">mistri</span>
-              <br />
-              in minutes
+      {/* Hero — background image with centered text + search */}
+      <section className="relative isolate h-[416px]">
+        <Image
+          src="/images/gardening-1.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover"
+          priority
+        />
+        {/* Dark tint so the text stays readable */}
+        <div className="absolute inset-0 bg-ink/70" />
+        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="text-center max-w-3xl mx-auto pt-12 sm:pt-20 pb-12 sm:pb-20">
+            <h1 className="font-display text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+              We find the pros. You enjoy the peace of mind.
             </h1>
-            <p className="mt-4 text-lg text-muted-strong sm:text-xl max-w-2xl mx-auto">
-              Approved local technicians, clear NPR prices, and cash on completion.
-              Reviews are verified only after the job is done.
-            </p>
 
-            {/* Search field — bold, ruled, olive submit */}
-            <form action="/services" method="get" role="search" className="mt-8">
-              <div className="flex gap-2">
-                <label htmlFor="home-search" className="sr-only">
-                  Search for a technician
-                </label>
-                <div className="flex-1 flex">
-                  <span className="inline-flex size-14 shrink-0 items-center justify-center border-r border-border bg-bg text-muted-strong">
-                    <Search className="size-6" aria-hidden="true" />
-                  </span>
-                  <Input
-                    id="home-search"
-                    name="q"
-                    type="search"
-                    autoComplete="off"
-                    placeholder="e.g. bijuli mistri, pani tap, plamber..."
-                    className="flex-1 h-14 border-r-0 border-border bg-surface text-ink text-lg pl-4 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-muted-strong"
-                  />
-                  <Button
-                    type="submit"
-                    className="h-14 px-8 shrink-0 font-display text-lg font-semibold text-ink bg-primary border-none hover:bg-primary/90 focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors"
-                  >
-                    Search
-                  </Button>
-                </div>
-              </div>
-
-              {/* Helper chips with real aliases */}
-              <div className="mt-4 flex flex-wrap gap-2 justify-center">
-                {["bijuli mistri", "pani", "plamber", "mistri", "carpenter", "painter"].map((alias) => (
-                  <Link
-                    key={alias}
-                    href={`/services?q=${encodeURIComponent(alias)}`}
-                    className="px-3 py-1.5 rounded-md border border-border bg-surface text-sm font-medium text-muted-strong hover:border-primary hover:text-primary hover:bg-primary/5 transition-colors"
-                  >
-                    {alias}
-                  </Link>
-                ))}
+            {/* Search field */}
+            <form action="/services" method="get" role="search" className="mt-10 sm:mt-14">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 max-w-2xl mx-auto">
+                <span className="inline-flex size-14 shrink-0 items-center justify-center border-r border-white/30 bg-white/10 text-white">
+                  <Search className="size-6" aria-hidden="true" />
+                </span>
+                <Input
+                  id="home-search"
+                  name="q"
+                  type="search"
+                  autoComplete="off"
+                  placeholder="e.g. bijuli mistri, pani tap, plamber..."
+                  className="flex-1 h-14 border-r-0 border-white/30 bg-white/10 text-white placeholder-white/70 focus:ring-2 focus:ring-primary focus:border-primary pl-4 pr-4 text-lg"
+                />
+                <Button
+                  type="submit"
+                  className="shrink-0 h-14 px-8 font-display text-lg font-semibold text-ink bg-primary border-none hover:bg-primary/90 focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors"
+                >
+                  Search
+                </Button>
               </div>
             </form>
           </div>
@@ -112,46 +98,36 @@ export default async function HomePage() {
               <p className="text-muted-strong">No service categories set up yet.</p>
             </div>
           ) : (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
               {categories.map((category) => (
                 <Link
                   key={category.slug}
                   href={`/services/${category.slug}`}
-                  className="group flex flex-col rounded-lg border border-border bg-surface p-6 transition-all hover:border-primary hover:shadow-md hover:-translate-y-0.5"
+                  className="group flex flex-col gap-2 rounded-lg border border-border bg-surface p-3 transition-colors hover:border-primary"
                 >
-                  {/* Icon + category name */}
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-center gap-3">
                     <IconSquare icon={category.icon} />
                     <div className="min-w-0 flex-1">
-                      <h3 className="font-display text-xl font-bold text-ink group-hover:text-primary transition-colors">
+                      <h3 className="font-display text-base font-bold text-ink leading-tight">
                         {category.name}
                       </h3>
-                      <p className="mt-1 font-mono text-xs text-muted-strong sm:text-sm">
-                        {category.tagline}
+                      <p className="flex items-center gap-1 text-xs text-muted-strong">
+                        <Star
+                          className="size-3 fill-current text-warning"
+                          aria-hidden="true"
+                        />
+                        {Number(category.avgRating || 0).toFixed(1)} (
+                        {category.approvedTechnicianCount} techs)
                       </p>
                     </div>
                   </div>
 
-                  {/* Trust badges row */}
-                  <div className="mt-4 flex items-center gap-3 text-xs">
-                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded border border-success bg-success/10 text-success font-mono font-bold">
-                      <CheckCircle2 className="size-3" aria-hidden="true" />
-                      Admin approved
+                  <div className="mt-auto flex items-center justify-between pt-1.5 border-t border-border">
+                    <span className="font-mono text-sm font-bold text-ink">
+                      from RS.2000
                     </span>
-                    {category.approvedTechnicianCount > 0 && (
-                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded border border-border bg-bg text-muted-strong font-mono">
-                        <span className="font-bold text-ink">{category.approvedTechnicianCount}</span> techs
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Starting price + arrow */}
-                  <div className="mt-auto flex items-center justify-between pt-4 border-t border-border">
-                    <span className="font-display text-lg font-bold text-ink">
-                      from NPR 500
-                    </span>
-                    <span className="inline-flex size-8 shrink-0 items-center justify-center rounded border border-border bg-bg text-muted-strong group-hover:border-primary group-hover:text-primary group-hover:bg-primary/5 transition-colors">
-                      →
+                    <span className="inline-flex size-7 shrink-0 items-center justify-center rounded border border-border bg-bg text-muted-strong group-hover:border-primary group-hover:text-primary group-hover:bg-primary/5 transition-colors">
+                      <ArrowRight className="size-3.5" aria-hidden="true" />
                     </span>
                   </div>
                 </Link>

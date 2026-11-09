@@ -17,6 +17,7 @@ export interface CategorySummary {
   tagline: string;
   icon: string;
   approvedTechnicianCount: number;
+  avgRating?: number;
 }
 
 export interface CategoryDetail extends CategorySummary {
@@ -35,7 +36,8 @@ export async function listCategories(): Promise<CategorySummary[]> {
             c.name,
             c.tagline,
             c.icon,
-            COALESCE(t.approved_count, 0)::int AS "approvedTechnicianCount"
+            COALESCE(t.approved_count, 0)::int AS "approvedTechnicianCount",
+            COALESCE(r.avg_rating::numeric(3,2), 0)::float8 AS "avgRating"
        FROM service_categories c
        LEFT JOIN (
          SELECT category_id, count(*)::int AS approved_count
@@ -43,6 +45,13 @@ export async function listCategories(): Promise<CategorySummary[]> {
           WHERE approval_status = 'approved'
           GROUP BY category_id
        ) t ON t.category_id = c.id
+       LEFT JOIN (
+         SELECT tp.category_id, AVG(rv.rating)::numeric(3,2) AS avg_rating
+           FROM technician_profiles tp
+           JOIN reviews rv ON rv.technician_id = tp.user_id
+          WHERE tp.approval_status = 'approved'
+          GROUP BY tp.category_id
+       ) r ON r.category_id = c.id
       ORDER BY c.name`,
   );
   return rows;
