@@ -70,7 +70,7 @@ export default async function HomePage() {
                   />
                   <Button
                     type="submit"
-                    className="h-14 px-8 shrink-0 font-display text-lg font-semibold text-white bg-primary border-none hover:bg-primary/90 focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors"
+                    className="h-14 px-8 shrink-0 font-display text-lg font-semibold text-ink bg-primary border-none hover:bg-primary/90 focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors"
                   >
                     Search
                   </Button>
@@ -290,7 +290,7 @@ export default async function HomePage() {
               <li key={step.title} className="relative rounded-lg border border-border bg-surface p-6">
                 <span
                   aria-hidden="true"
-                  className="absolute -top-4 left-6 inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-primary bg-primary font-display text-base font-bold text-white"
+                  className="absolute -top-4 left-6 inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-primary bg-primary font-display text-base font-bold text-ink"
                 >
                   {index + 1}
                 </span>

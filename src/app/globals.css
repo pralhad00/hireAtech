@@ -13,18 +13,40 @@
  * border-border.
  */
 :root {
-  --color-primary: #414a2f; /* olive — brand color, buttons, key elements */
-  --color-primary-soft: #68734c; /* light olive — secondary brand elements */
-  --color-bg: #f2f0e8; /* warm off-white — dominant page background */
-  --color-ink: #25271f; /* dark charcoal — text and dark surfaces */
-  --color-surface: #ffffff; /* cards, inputs, contrasting surfaces */
-  --color-border: #dcd9cc; /* warm borders and separators */
-  --color-muted: #77786f; /* large labels only (≥18px bold / ≥24px) */
-  --color-muted-strong: #5e5f57; /* small secondary text (passes AA) */
-  --color-bg-subtle: #e9e7de; /* neutral surface variation */
-  --color-success: #287a50;
-  --color-warning: #b77a35;
-  --color-error: #b7443d;
+  /* Brand and primary — DESIGN.md §2 (signal orange on ink, white-led surfaces) */
+  --color-primary: #FF5A1F; /* signal orange brand accent */
+  --color-primary-hover: #E04A12;
+  --color-primary-pressed: #C23E0C;
+  --color-primary-text: #B93509;
+  --color-primary-soft: #FFE9E0;
+  --color-primary-subtle: #FFF4EF;
+  --color-on-primary: #111418; /* text/icons placed on orange fills */
+
+  /* Neutral — DESIGN.md §2 */
+  --color-bg: #FFFFFF; /* dominant page background */
+  --color-surface: #FFFFFF; /* cards, inputs, foreground surfaces */
+  --color-ink: #111418; /* headings, body text, dark sections, strong borders */
+  --color-border: #DEDCD6; /* standard 1px borders, dividers, ruled lines */
+  --color-bg-subtle: #F5F5F2; /* alternate sections, icon tiles, photo placeholders */
+  --color-bg-strong: #EBEAE5; /* hover backgrounds for subtle surfaces and rows */
+  --color-muted: #6B7078; /* placeholders and least-important text; white only */
+  --color-muted-strong: #4A4F57; /* secondary text and metadata on light surfaces */
+
+  /* Dark-section — DESIGN.md §2 */
+  --color-dark-raised: #1C2026; /* panels placed inside dark sections */
+  --color-dark-border: #33383F; /* dividers and chip borders on dark surfaces */
+  --color-on-dark: #FFFFFF; /* headings and primary text on dark surfaces */
+  --color-on-dark-soft: #C9CCD1; /* supporting text on dark surfaces */
+
+  /* Functional — DESIGN.md §2 (foreground / tint) */
+  --color-success: #12805C;
+  --color-success-tint: #E6F4EE;
+  --color-warning: #8A5A00;
+  --color-warning-tint: #FFF4D6;
+  --color-error: #D92D20;
+  --color-error-tint: #FDECEA;
+  --color-info: #2457C5;
+  --color-info-tint: #E9EFFB;
 
   /* Typography (DESIGN.md §3): Space Grotesk geometric grotesk for
      headings/display, Plus Jakarta Sans for body. Wired to the next/font CSS
@@ -44,7 +66,7 @@
   --popover: var(--color-surface);
   --popover-foreground: var(--color-ink);
   --primary: var(--color-primary);
-  --primary-foreground: #ffffff;
+  --primary-foreground: var(--color-ink); /* ink text on orange fills (DESIGN.md §25, §276) */
   --secondary: var(--color-bg-subtle);
   --secondary-foreground: var(--color-ink);
   --muted: var(--color-bg-subtle);
@@ -84,6 +106,22 @@
   --color-success: var(--color-success);
   --color-warning: var(--color-warning);
   --color-error: var(--color-error);
+  /* Extended DESIGN.md §2 tokens */
+  --color-primary-hover: var(--color-primary-hover);
+  --color-primary-pressed: var(--color-primary-pressed);
+  --color-primary-text: var(--color-primary-text);
+  --color-primary-subtle: var(--color-primary-subtle);
+  --color-on-primary: var(--color-on-primary);
+  --color-bg-strong: var(--color-bg-strong);
+  --color-dark-raised: var(--color-dark-raised);
+  --color-dark-border: var(--color-dark-border);
+  --color-on-dark: var(--color-on-dark);
+  --color-on-dark-soft: var(--color-on-dark-soft);
+  --color-success-tint: var(--color-success-tint);
+  --color-warning-tint: var(--color-warning-tint);
+  --color-error-tint: var(--color-error-tint);
+  --color-info: var(--color-info);
+  --color-info-tint: var(--color-info-tint);
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
   --font-heading: var(--font-space-grotesk);
@@ -138,7 +176,7 @@ body {
 
 /* Visible focus for keyboard users everywhere (spec §11). */
 :focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-ink);
   outline-offset: 2px;
 }
 

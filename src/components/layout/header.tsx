@@ -134,7 +134,7 @@ export function SiteHeader() {
                   />
                   <button
                     type="submit"
-                    className="h-12 px-6 shrink-0 font-display text-base font-semibold text-white bg-primary border-none hover:bg-primary/90 focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors"
+                    className="h-12 px-6 shrink-0 font-display text-base font-semibold text-ink bg-primary border-none hover:bg-primary/90 focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors"
                   >
                     Search
                   </button>

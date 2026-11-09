@@ -108,7 +108,7 @@ export default function HowItWorksPage() {
             <li key={step.number} className="relative flex gap-6 rounded-lg border border-border bg-surface p-6">
               <span
                 aria-hidden="true"
-                className="shrink-0 inline-flex size-10 items-center justify-center rounded border border-primary bg-primary font-display text-lg font-bold text-white"
+                className="shrink-0 inline-flex size-10 items-center justify-center rounded border border-primary bg-primary font-display text-lg font-bold text-ink"
               >
                 {step.number}
               </span>

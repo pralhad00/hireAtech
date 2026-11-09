@@ -1,247 +1,256 @@
-# DESIGN.md — HireATech visual system (Job Sheet world)
+DESIGN.md — HireATech Design System
+Authority: spec.md §11 takes precedence over this file. This document is the implementation contract for HireATech’s visual design. Follow it over generic design advice or framework defaults. If implementation reveals a genuine design decision that is not covered here, update this document rather than introducing undocumented visual patterns.
 
-> **Authority order:** `spec.md §11` > this file > any generic design advice
-> (including the impeccable tool). §11 was **amended Nov 2026
-> (owner-approved)** from the terracotta "warm workshop" system to the
-> **Industrial Modernism / Job Sheet** system below. This file is the full
-> design contract, not a description of built code; drift discovered while
-> building gets folded back here rather than being tolerated in code.
+Current direction: Industrial Modernism / Job Sheet. The approved November 2026 revision uses signal orange on ink, white-led surfaces, and completely square geometry. Earlier terracotta and olive systems are retired.
 
-## 1. Personality — Job Sheet Industrial Modernism
+1. Brand and visual direction
+HireATech should feel like the digital work order of an established, professional trades company — not a generic SaaS dashboard or a startup landing-page template.
 
-A rugged, modern, professional service brand — like an established trades
-company's carbon-copy work order, not a generic SaaS application and not a
-startup landing page. The interface communicates reliability, professionalism,
-simplicity, and a strong visual identity; visually bold without becoming
-complicated.
+The interface must communicate reliability, clarity, competence, and local service. Its visual identity comes from strong typography, disciplined grids, ruled fields, serial numbers, trade codes, and approval marks.
 
-- Strong typography does the branding work; decoration does not exist.
-- Sharp borders (1px, 0–4px corners), solid surfaces, structured grids.
-- **Strictly avoid:** drop shadows, gradients, glass/glassmorphism, glow,
-  floating decorative elements, excessive blur, pill shapes, excessive
-  rounding, tricks from the previous terracotta system (see §13).
-- Depth comes from contrast, alignment, type and composition — never shadows.
-- The site **is** a work order: serial numbers, ruled fields, margin rules,
-  rubber-stamp approval marks, station-by-station flow.
+Core principles
+- Typography and composition do the branding; decoration does not.
+- Use sharp 1px borders, square corners, solid surfaces, and clear alignment.
+- Treat the interface as a work order: serial-number strips, field labels, margin rules, dotted leaders, approval stamps, and numbered process steps.
+- Create depth through contrast, spacing, borders, and hierarchy — never shadows.
+- Keep public pages visually bold; keep booking and dashboard interfaces quieter and task-focused.
+Never use: drop shadows, gradients, glassmorphism, glow, decorative floating elements, excessive blur, pill shapes, rounded corners, or generic SaaS card layouts.
+2. Color system
+Use these tokens consistently. Do not invent additional brand colors.
+Brand and primary colors
+Token	Value	Intended use
+primary	#FF5A1F	Signal orange brand accent, primary buttons, key icons, and highlighted bands
+on-primary	#111418	Text and icons placed on orange fills
+primary-hover	#E04A12	Hover state for orange controls
+primary-pressed	#C23E0C	Pressed state; white text is permitted here
+primary-text	#B93509	Accessible orange text on light surfaces, including links and tertiary actions
+primary-soft	#FFE9E0	Badges, active chips, and selected-row tint
+primary-subtle	#FFF4EF	Very light selected or highlighted sections
 
-## 2. Color tokens (spec §11 — binding)
 
-**Primary palette**
+Neutral colors
+Token	Value	Intended use
+bg	#FFFFFF	Main page background
+surface	#FFFFFF	Cards, inputs, and foreground surfaces
+ink	#111418	Headings, body text, dark sections, and strong borders
+border	#DEDCD6	Standard 1px borders, dividers, and ruled lines
+bg-subtle	#F5F5F2	Alternate sections, icon tiles, and photo placeholders
+bg-strong	#EBEAE5	Hover backgrounds for subtle surfaces and rows
+muted-strong	#4A4F57	Secondary text and metadata; use on light surfaces
+muted	#6B7078	Placeholders and least-important text; use on white only
 
-| Token | Value | Use |
-|---|---|---|
-| primary | `#414A2F` | Olive green — brand color, buttons, important elements |
-| bg | `#F2F0E8` | Warm off-white — dominant page background (ruled paper) |
-| ink | `#25271F` | Dark charcoal — headings, body text, dark surfaces |
-| surface | `#FFFFFF` | Cards, inputs, contrasting surfaces |
 
-**Supporting palette**
+Dark-section colors
+Token	Value	Intended use
+dark-raised	#1C2026	Panels placed inside dark sections
+dark-border	#33383F	Dividers and chip borders on dark surfaces
+on-dark	#FFFFFF	Headings and primary text on dark surfaces
+on-dark-soft	#C9CCD1	Supporting text on dark surfaces
 
-| Token | Value | Use |
-|---|---|---|
-| primary-soft | `#68734C` | Light olive — secondary brand elements |
-| border | `#DCD9CC` | Warm borders and separators (ruled lines) |
-| muted | `#77786F` | Large labels (≥18px bold / ≥24px) and non-essential marks only; **fails small-text AA** (≈3.9:1 on bg) |
-| muted-strong | `#5E5F57` | Small secondary text — passes AA on bg and surface |
-| bg-subtle | `#E9E7DE` | Neutral surface — subtle background variation |
 
-**Functional palette** (meaningful states only, never decoration)
+Use ink (#111418) as the background for dark sections.
+Functional colors
+Use functional colors only to communicate a real state. They are not brand decoration.
+State	Foreground	Tint	Intended use
+Success	#12805C	#E6F4EE	Confirmations and admin-approved status
+Warning	#8A5A00	#FFF4D6	Pending attention, including pending bookings
+Error	#D92D20	#FDECEA	Validation errors and destructive actions
+Info	#2457C5	#E9EFFB	Neutral notices and tips only
 
-| Token | Value | Use |
-|---|---|---|
-| success | `#287A50` | Successful actions and confirmations (admin-approved stamp) |
-| warning | `#B77A35` | Warnings, pending attention (e.g. a pending booking) |
-| error | `#B7443D` | Errors and destructive actions |
 
-### Usage rules
+Blue is permitted only for informational states. It is not a secondary brand color.
+Color application rules
+- White is the dominant page background. Use bg-subtle to distinguish alternate sections.
+- ink carries primary text and dark sections. Orange is the only brand accent.
+- Orange fills use on-primary text. Do not use white text on bright orange.
+- Small orange text on light backgrounds must use primary-text, never primary.
+- Use muted only on white. On bg-subtle, use muted-strong for secondary text.
+- Status must never rely on color alone. Pair status text with a small colored dot or a 3px left rule.
+- Use the warning token for pending states; do not let warning indicators resemble the orange brand accent.
+- No purple, indigo, gradients, or additional invented accent colors.
+Where orange belongs
+Public pages — home, services, about, and help:
+- Orange can own prominent regions such as the search band, technician CTA band, and primary actions.
+- Ink owns the hero strip, footer, and service-area band.
+App pages — forms, booking flow, and dashboards:
+- Use white and bg-subtle as the main surfaces.
+- Restrict orange to primary actions, meaningful icons, active markers, and primary-text links.
+3. Typography
+Font families
+- Headings, display text, navigation, and buttons: Space Grotesk, weights 400, 500, 600, and 700.
+- Body text, descriptions, forms, and long-form content: Plus Jakarta Sans, weights 400, 500, and 600.
+- Self-host both through next/font.
+- Do not use Inter or decorative display fonts.
+Use large, confident headings. Establish hierarchy through size and weight, not decorative styling.
+Type scale
+Element	Desktop size
+Display heading	48–56px
+Page heading	32–40px
+Section heading	24–28px
+Component heading	18–20px
+Body text	15–16px
+Labels	13–14px
+Supporting text	12px minimum
 
-- Off-white is the dominant background; white separates surfaces; charcoal
-  carries text; olive is the only accent — it never has to compete.
-- Small text is always `ink` or `muted-strong` on light surfaces.
-- Status badges are **text-first**: colour appears as a small dot or 3px left
-  rule next to ink text; status is never colour-only (accessibility).
-- No purple/indigo, no gradients, no invented accent colors, anywhere.
 
-### Where olive lives (owner decision: bold public, quiet app)
+- Body text on mobile should be 16px.
+- Secondary text on mobile must not fall below 14px.
+- Keep long-form text around 65–75 characters per line (65–75ch).
+- Use monospace numerals (font-mono, bold, wide tracking) for serial numbers, trade codes, and work-order field labels.
+4. Geometry, borders, and surfaces
+Square geometry
+- Every corner has a 0px radius. This applies to buttons, inputs, cards, tiles, chips, badges, avatars, images, modals, and dropdowns.
+- Do not use rounded, pill-shaped, or circular UI elements.
+- Do not introduce exceptions for small components.
+Borders and surface treatment
+- Standard borders are 1px solid border.
+- Use visible separators between sections.
+- Use a 2px ink or primary border for emphasis; never use a shadow.
+- Use solid surfaces only: white, bg-subtle, orange, and ink.
+- Do not stack nested cards or wrap every element in a card. Prefer spacing, alignment, and ruled separators.
+- Use dotted bottom borders for trade/category leader rows and solid rules for section breaks and work-order boundaries.
+Lists and rows
+Prefer occupied, bordered rows over piles of cards:
+- Initials avatar or meaningful icon on the left.
+- Primary name and one concise supporting line.
+- Relevant details beneath or alongside the primary information.
+- Generous vertical padding and touch-friendly interactive areas.
+- On hover, change the border to ink.
+- Selected rows use primary-subtle with a primary border.
+Avoid repetitive three-card layouts. In particular:
+- How-it-works sections use a numbered vertical sequence.
+- Services are presented as rows.
+- Categories use a simple grid of labelled tiles, not repeated icon/title/description cards.
+5. Photography and image assets
+HireATech is a photography-led brand. Use authentic commercial photography showing Nepalese technicians working in realistic residential or commercial environments.
 
-- **Public pages** (home, services, about, help): olive owns whole regions —
-  the search field band, primary buttons, key moments; charcoal owns the
-  footer/service-area strip.
-- **App pages** (forms, dashboards, booking flow — Steps 5–12): off-white and
-  white surfaces; olive only on buttons, links and active markers.
+Photography direction
+- Professional technicians and appropriate work equipment.
+- Realistic Nepalese homes, businesses, and service environments.
+- Natural lighting and clear, recognizable subjects.
+- Show people performing the service, not merely posing with tools.
+Asset integrity
+- Do not use generic Western stock photography.
+- Do not present AI-generated or invented images as real HireATech technicians, customers, jobs, or locations.
+- Until genuine photography is available, use an honest placeholder: a bordered block filled with ink or bg-subtle, plus a short factual caption describing the intended image.
+- Example caption: “Technician repairing a sink in a Birtamod home.”
+- Standard image proportions: 16:9 for wide bands, 4:3 for inline images, and 1:1 for avatar-adjacent placements.
+- Text placed over photography must sit on an ink overlay at 70% opacity (#111418B3).
+- Technician profiles use square, bordered initials avatars with ink text on bg-subtle. Individual technician profile photos are out of scope unless the project requirements change.
 
-## 3. Typography
+7. Layout, responsiveness, and spacing
+Breakpoints
+- Mobile: < 640px
+- Tablet: 640–1023px
+- Desktop: ≥ 1024px
+Build mobile-first. Pages must not create horizontal overflow at any supported viewport size.
+Spacing scale
+Use a 4px base unit:
+Token	Value
+XS	4px
+SM	8px
+MD	16px
+LG	24px
+XL	32px
+2XL	48px
+3XL	64px
 
-- Display/headings/navigation/buttons: **Space Grotesk** (geometric
-  grotesk; weights 400/500/600/700) — sharp, technical, marketplace-native;
-  wide uppercase for impact. Self-hosted via `next/font`.
-- Body/descriptions/forms/long text: **Plus Jakarta Sans** (weights
-  400/500/600). Self-hosted via `next/font`.
-- **Never Inter** (spec §11).
-- Large, bold, confident headings; hierarchy through size and weight; no
-  decorative fonts.
-- Scale (desktop; responsive down on smaller screens):
 
-| Element | Size |
-|---|---|
-| Display headings | 48–56px |
-| Page headings | 32–40px |
-| Section headings | 24–28px |
-| Component headings | 18–20px |
-| Body text | 15–16px |
-| Labels | 13–14px |
-| Supporting text | 12px minimum |
+Give headings more space above than below.
+Containers and alignment
+- Desktop side padding: 32px.
+- Tablet side padding: 24px.
+- Mobile side padding: 16px.
+- Maximum content width: 1200px.
+- Use structured grids and consistent alignment rather than arbitrary positioning.
+- Maintain a consistent horizontal alignment and section rhythm across pages.
+Persistent work-order language
+Carry a restrained set of work-order elements across the site so every page feels part of the same system:
+- Serial-number strip.
+- Service-area band.
+- Ruled field labels and margin rules.
+- Punch-hole details where they support the composition.
+- Dotted-leader rows for trade/category names, with the admin-approved stamp where applicable.
+These elements should establish the visual language, not become decorative clutter.
+8. Motion and interaction
+Use Framer Motion only for small, purposeful interface feedback:
+- Accordion and disclosure expansion.
+- Loading-to-complete state changes.
+- Subtle focus, hover, and tap feedback.
+Motion rules:
+- Typical transitions: 150–300ms.
+- Use an exponential ease-out curve.
+- Respect prefers-reduced-motion.
+- Do not use scroll parallax, decorative floating motion, page-entrance animation sequences, or animations that delay an action.
+- Motion supports usability; it must not become the visual focus.
 
-Body is 16px on mobile; secondary text never below 14px (spec §11). Measure
-targets 65–75ch for long text.
+10. Component and state rules
+Buttons
+Use four button variants:
+Variant	Appearance	Use
+Primary	Orange fill, ink text	Main action
+Secondary	White fill, 1px ink border and ink text	Alternative action
+Dark	Ink fill, white text	Actions on orange bands
+Ghost	Ink text, underline on hover	Low-emphasis actions
 
-Monospace stencil numerals (`font-mono`, `tracking-widest`, `font-bold`) for
-serial numbers, trade codes, and field labels — the work-order chrome.
 
-## 4. Borders, shapes and surfaces
+- Primary hover: primary-hover.
+- Primary pressed: primary-pressed with white text.
+- Keep labels bold and readable.
+- Provide visible hover, focus, disabled, and loading states.
+- Disable action buttons while their action is processing to avoid duplicate submissions.
+Inputs and forms
+- Use white input backgrounds, square corners, and 1px border.
+- Place a visible label above each input; search may use an accessible screen-reader-only label.
+- Use muted for placeholders on white surfaces.
+- Show validation messages below the relevant field.
+- Error messages use the error foreground and tint, with a 3px left rule. Never communicate an error through color alone.
+- Validate on blur or submit.
+- Expose errors with role="alert" or an appropriate aria-live region.
+- On submission failure, move focus to the first invalid field.
+- Use a visible 2px ink focus outline on light surfaces and a 2px primary focus outline on dark sections.
+- Theme browser selection and caret colors using the orange/ink palette.
+Chips and badges
+- Chips use a 1px border and square geometry.
+- Active chips use primary-soft with primary-text.
+- General badges such as “Verified” or “Top rated” use primary-soft with primary-text.
+- Verification may use the success tint and success foreground.
+- Status remains text-first; never rely on color alone.
+Admin-approved stamp
+Use a consistent inline stamp:
+- Inline-flex layout.
+- Success-colored border and text.
+- White (surface) background.
+- Monospace, uppercase text at approximately 10px.
+- Use only when approval is real and supported by application data.
+Required UI states
+Every list and form must have appropriate:
+- Loading state.
+- Empty state.
+- Error state.
+- Success or completion state.
+Every interactive control must be keyboard accessible and have a visible focus state. Every page must have a meaningful title and its own metadata.
+11. UX principles
+1. Fast discovery: help users find the right technician in as few steps as practical.
+2. Trust and transparency: show approval status, experience, reviews, and service information explicitly. Never imply information that is not available.
+3. Pricing clarity: distinguish visit charge, estimate, and final charge. Use NPR consistently.
+4. Simple interactions: keep navigation and forms short and understandable.
+5. Consistent feedback: every action — booking, status change, error, or confirmation — must produce clear visible feedback.
+6. Accessibility: maintain readable type, sufficient contrast, keyboard access, and understandable controls.
+7. Responsive behavior: provide a usable experience on phones, tablets, and desktops.
+12. Non-negotiable restrictions
+Apply these rules to every page and every implementation agent:
+- No popups, chat bubbles, or floating widgets over the page.
+- No urgency tricks, countdowns, or fabricated scarcity.
+- No invented statistics, testimonials, phone numbers, or 24/7 claims.
+- Never label a pending booking as confirmed.
+- No shadows, gradients, glass effects, glow, or floating decorations.
+- No rounded corners, pill shapes, circular UI, nested cards, or repetitive card piles.
+- No white text on bright orange; no bright orange text for small text on white.
+- No decorative icons, emoji icons, or mixed icon libraries.
+- No fake photography or invented customer/technician imagery presented as real.
+- No secondary brand color. Blue is reserved for informational UI states only.
+- No centered pill-search hero, generic three-card feature stacks, or generic startup/SaaS visual patterns.
+- Do not invent content or visual proof to make a page appear more complete. Use honest empty states and placeholders.
 
-- Prefer square corners: radius range is **0–4px** (default 2px on buttons,
-  inputs, tiles). Pill buttons/containers are banned.
-- 1px solid borders in `border` `#DCD9CC` (inputs, cards, dividers); visible
-  separators between sections; borders instead of shadows, everywhere.
-- **Ruled lines everywhere**: dotted leaders for trade names (`border-dotted
-  border-border`), solid rules for section breaks, margin rules on work-order
-  chrome.
-- Solid surfaces only: white, off-white, olive, charcoal. No nested-card
-  stacking; don't wrap every element in a card — structure via rules and
-  alignment.
-- **Occupied rows over card piles**: lists render as bordered rows —
-  initials avatar / icon left, primary name and one line on top, details
-  below; generous row padding; thumb-sized taps.
-- The "repetitive three-card layout" is banned (SaaS-template smell): the
-  homepage how-it-works is a numbered vertical flow, not three identical
-  cards; services are rows; categories are a plain grid of labelled tiles
-  without repeated icon+heading+text card anatomy.
 
-## 5. Photography and visual assets
-
-**Photography-led brand** — real commercial photography of Nepalese
-technicians in realistic residential and commercial environments: professional
-uniforms, appropriate equipment, natural lighting, people at work. Photography
-leads; illustrations don't fill; decorative graphics don't exist.
-
-- No generic Western stock photography; no artificial AI-generated imagery
-  (also required by spec §0 honesty rules).
-- **Honest photo slots:** until real assets exist, photography appears as
-  bordered blocks — charcoal `#25271F` or `bg-subtle` `#E9E7DE` fill, a small
-  truthful caption naming what the photo will show ("Technician repairing a
-  sink in a Birtamod home"), fixed aspect ratios (16:9 band, 4:3 inline, 1:1
-  avatar-adjacent). Never editorial decoration, never invented imagery.
-- Technician profiles use **initials avatars** (square, bordered, charcoal
-  text on `bg-subtle`) — photos per technician remain out of scope.
-
-## 6. Iconography
-
-- Icon system: **Lucide** (`lucide-react`), the one approved library
-  (spec §3, amended). No Material Symbols, no emoji, no mixing sets.
-- Used sparingly and purposefully: search, navigation affordances, status
-  indicators, explicit category meaning. Prefer text labels for actions that
-  are ambiguous.
-- Consistent sizing: 16px (inline/UI), 20px (row/section), 24px (feature
-  tiles); 2px stroke weight, `ink` or olive (`primary`).
-- No icon beside every heading; no icons to fill empty space. Typography and
-  imagery communicate.
-
-## 7. Layout and spacing
-
-- Mobile-first: mobile `< 640px`, tablet 640–1023px, desktop `≥ 1024px`. No
-  horizontal overflow at any size (spec §11).
-- Spacing scale (4px base): XS 4, SM 8, MD 16, LG 24, XL 32, 2XL 48, 3XL 64.
-  More space above a heading than below it.
-- Container side padding: 32px desktop, 24px tablet, 16px mobile; max content
-  width 1200px.
-- Structured grids over arbitrary positioning; consistent horizontal
-  alignment and section rhythm across pages.
-- **Work-order chrome**: serial number strip, service-area band, ruled field
-  labels, margin rules, punch-hole dots — these persist across every page so
-  the site reads as a single record.
-- **Dotted-leader rows**: category/trade names with `border-b border-dotted
-  border-border` leading to the admin-approved stamp.
-
-## 8. Motion
-
-- framer-motion (owner-approved Nov 2026) powers **subtle, purposeful
-  micro-interactions only**: accordion/disclosure expansion, small state
-  feedback (loading → done), gentle focus/tap affordances. Transitions stay
-  150–300ms, exponential ease-out.
-- **Still banned:** scroll parallax, page-entrance animation spam, floating
-  decorations, anything that delays interaction. Motion supports actions; it
-  shouldn't be the show.
-- Everything honors `prefers-reduced-motion`.
-
-## 9. Homepage — first viewport (Job Sheet: search as field one)
-
-1. **Work-order masthead** (header): serial number left, brand center, service
-   area right.
-2. **Ruled field area**: "FIELD ONE · WHAT NEEDS FIXING" label, huge
-   Space Grotesk heading "Name the problem.", the search as field one (ruled input
-   with icon prefix, olive primary submit button).
-3. **Record column**: six real trades with dotted leaders and `✓ APPROVED`
-   stamp (green success token).
-4. **Foot band**: charcoal ground — "CASH ON COMPLETION — NO PAYMENT SITE-SIDE"
-   and "NPR PRICING · LOCAL TECHNICIANS ONLY · NO POSTCODE".
-
-## 10. Component rules (spec §11 — binding)
-
-- Buttons: primary (olive fill, white text), secondary (white/transparent,
-  charcoal 1px border and text), ghost (ink text, underline on hover);
-  square corners, bold readable labels; visible hover, focus, disabled and
-  loading states. Every action button disables while working (no double
-  submits).
-- Inputs: solid white/off-white background, 1px `border`, sharp corners,
-  visible label above (or `sr-only` for search), error text below in `error`
-  (never colour-only); validate on blur/submit; errors via `role="alert"` /
-  `aria-live`; focus moves to the first error; focus ring is a 2px olive
-  outline, visible everywhere ("browser surfaces themed: selection olive/white,
-  focus, caret").
-- Every list and form shows loading, empty, error and success states.
-- Keyboard friendly; sensible page titles; every page keeps its own
-  `metadata`.
-- **Admin-approved stamp**: inline flex, `success` border and text, `surface`
-  bg, monospace `text-[10px]`, uppercase — the single decisive color mark.
-
-## 11. UX principles
-
-1. **Fast discovery** — find the right technician in as few steps as possible.
-2. **Trust and transparency** — approval status, experience, reviews, service
-   info are plainly shown, never implied.
-3. **Pricing clarity** — visit charge vs estimate vs final charge defined
-   once and used consistently (NPR).
-4. **Simple interactions** — navigation and forms stay short and obvious.
-5. **Consistent feedback** — every action (book, status change, error,
-   confirmation) answers visibly.
-6. **Accessibility** — readable type, sufficient contrast (small text is
-   `ink`/`muted-strong`), keyboard access, understandable controls.
-7. **Responsive design** — works on desktop, tablet and phone.
-
-## 12. Nevers (apply to every future page and agent)
-
-- **No popups, chat bubbles, or floating widgets** over the page.
-- **No urgency tricks** — no countdowns, no "only 2 left!".
-- No invented stats, testimonials, phone numbers, or 24/7 promises (spec §0);
-  pending is never labelled "confirmed".
-- No shadows, gradients, glass, glow, floating decorations.
-- No pill shapes or playful rounding; no card piles; no nested cards.
-- No decorative icons, no emoji as icons, no icon-set mixing.
-- No fake photography — empty states and photo slots are honest.
-- No centered pill-search hero, no uniform three-card stacks, no rounded
-  friendly buttons, no stock-color tagline — the tells you already named.
-
-## 13. Migration — retired from the previous system (owner-approved)
-
-| Retired | Replacement |
-|---|---|
-| Terracotta `#E45A32` / cream `#F4F0E7` / ink `#182820` / border `#D8D2C7` / muted `#667568` / error `#B42318` / success `#28734A` | Section 2 palette |
-| Bitter (slab serif display) + Work Sans | Space Grotesk (geometric grotesk) + Plus Jakarta Sans |
-| Radii 2–8px | 0–4px, square-leaning |
-| Icon squares (hand-drawn SVG set in bordered squares) | Bordered 4px-radius tiles with Lucide 24px icons, uppercase-style trade label |
-| One orchestrated homepage reveal | No entrance animations at all |
-| `background: primary` buttons with terracotta hover | Olive buttons, hover darkened via `ink` overlay (no invented color) |
-| "Calm workshop" personality copy patterns | Industrial Modernism tone: direct, professional, plain |
-| Centered hero tagline + search pill | Work-order masthead + ruled field one + record column |
-| Uniform three-card feature grid | Numbered station flow, dotted-leader rows |
