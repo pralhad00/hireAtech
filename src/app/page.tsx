@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 const trustSignals = [
   { icon: ShieldCheck, label: "Admin approved", desc: "Every technician verified before listing" },
   { icon: Star, label: "Verified reviews", desc: "Only after completed bookings" },
-  { icon: Clock, label: "Fast response", desc: "Most reply within an hour" },
+  { icon: Clock, label: "Fast response", desc: "Your message goes straight to the technician" },
   { icon: MapPin, label: "Local only", desc: "Birtamod, Jhapa — no outsiders" },
 ];
 
@@ -46,8 +46,8 @@ export default async function HomePage() {
               in minutes
             </h1>
             <p className="mt-4 text-lg text-muted-strong sm:text-xl max-w-2xl mx-auto">
-              Approved local technicians. Clear NPR prices. Cash on completion.
-              Verified reviews only after the job is done.
+              Approved local technicians, clear NPR prices, and cash on completion.
+              Reviews are verified only after the job is done.
             </p>
 
             {/* Search field — bold, ruled, olive submit */}
@@ -102,7 +102,7 @@ export default async function HomePage() {
               BROWSE BY TRADE
             </p>
             <h2 className="font-display text-3xl font-bold text-ink sm:text-4xl">
-              Every trade you need
+              Technicians by trade
             </h2>
             <p className="mt-2 text-muted-strong sm:text-base max-w-2xl mx-auto">
               Each category shows admin-approved technicians with ratings and
@@ -180,9 +180,6 @@ export default async function HomePage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <p className="font-mono text-xs font-bold tracking-widest text-primary mb-2 sm:text-sm">
-                TECHNICIANS NEAR YOU
-              </p>
               <h2 className="font-display text-3xl font-bold text-ink sm:text-4xl">
                 Ready when you are
               </h2>
@@ -318,9 +315,8 @@ export default async function HomePage() {
             Birtamod, Jhapa — this area only
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-white/80 sm:text-lg">
-            Keeping it small keeps the listed technicians genuinely local.
-            Your address helps the technician plan the trip — cash on
-            completion, NPR pricing, no postcode, no ZIP.
+            Your address helps the technician plan the trip, with cash on
+            completion and NPR pricing.
           </p>
           <div className="mt-8 flex items-center justify-center gap-4">
             <Link
