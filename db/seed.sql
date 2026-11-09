@@ -34,7 +34,17 @@ VALUES
    'General Maintenance',
    'Small repairs and handyman tasks',
    'Handles everyday repairs, small installations and odd maintenance jobs around the home.',
-   'hammer')
+   'hammer'),
+  ('home-cleaning',
+   'Home Cleaning',
+   'Clean homes, inside and out',
+   'Dusting, mopping, kitchen and bathroom cleaning, and general housekeeping at your door.',
+   'sparkles'),
+  ('handyman',
+   'Handyman',
+   'Odd jobs and small fixes',
+   'Small repairs, furniture assembly, mounting, and everyday maintenance tasks around the home.',
+   'tool')
 ON CONFLICT (slug) DO NOTHING;
 
 -- Words people type when searching (spec §12). Extend via Admin > Categories.
@@ -72,6 +82,14 @@ JOIN (VALUES
   ('general-maintenance', 'maintenance'),
   ('general-maintenance', 'handyman'),
   ('general-maintenance', 'repair'),
-  ('general-maintenance', 'mistri')
+  ('general-maintenance', 'mistri'),
+  ('home-cleaning', 'home cleaning'),
+  ('home-cleaning', 'house cleaning'),
+  ('home-cleaning', 'cleaning'),
+  ('home-cleaning', 'maid'),
+  ('handyman', 'handyman'),
+  ('handyman', 'odd jobs'),
+  ('handyman', 'fixer'),
+  ('handyman', 'small repairs')
 ) AS v(slug, alias) ON v.slug = c.slug
 ON CONFLICT (category_id, alias) DO NOTHING;
