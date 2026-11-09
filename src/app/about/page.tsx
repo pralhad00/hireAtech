@@ -25,12 +25,9 @@ export default function AboutPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-16">
       <div className="mb-12">
-        <p className="font-mono text-xs font-bold tracking-widest text-primary mb-2 sm:text-sm">
-          ABOUT HIREATECH
-        </p>
-        <h1 className="font-display text-3xl font-bold text-ink sm:text-4xl">
+        <h2 className="font-display text-3xl font-bold text-ink sm:text-4xl">
           About HireATech
-        </h1>
+        </h2>
       </div>
 
       {/* Hero statement */}

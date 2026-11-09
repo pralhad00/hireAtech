@@ -84,12 +84,9 @@ export default function HowItWorksPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
       <div className="mb-12">
-        <p className="font-mono text-xs font-bold tracking-widest text-primary mb-2 sm:text-sm">
-          HOW IT WORKS
-        </p>
-        <h1 className="font-display text-3xl font-bold text-ink sm:text-4xl">
+        <h2 className="font-display text-3xl font-bold text-ink sm:text-4xl">
           How it works
-        </h1>
+        </h2>
         <p className="mt-2 max-w-2xl text-muted-strong sm:text-base">
           HireATech connects people in Birtamod, Jhapa with local technicians —
           through real mechanisms: admin approval before anyone appears publicly,

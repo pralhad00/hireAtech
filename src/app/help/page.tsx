@@ -59,12 +59,9 @@ export default function HelpPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
       <div className="mb-10">
-        <p className="font-mono text-xs font-bold tracking-widest text-primary mb-2 sm:text-sm">
-          HELP & FAQ
-        </p>
-        <h1 className="font-display text-3xl font-bold text-ink sm:text-4xl">
+        <h2 className="font-display text-3xl font-bold text-ink sm:text-4xl">
           Help & FAQ
-        </h1>
+        </h2>
         <p className="mt-2 max-w-prose text-muted-strong sm:text-base">
           Straight answers about how HireATech behaves. Nothing here is a
           promise of a feature — it describes what works today.

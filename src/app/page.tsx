@@ -98,9 +98,6 @@ export default async function HomePage() {
       <section className="bg-surface py-16 sm:py-24 border-y border-border">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="text-center mb-12">
-            <p className="font-mono text-xs font-bold tracking-widest text-primary mb-2 sm:text-sm">
-              BROWSE BY TRADE
-            </p>
             <h2 className="font-display text-3xl font-bold text-ink sm:text-4xl">
               Technicians by trade
             </h2>
@@ -274,9 +271,6 @@ export default async function HomePage() {
       <section className="bg-bg py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="text-center mb-12">
-            <p className="font-mono text-xs font-bold tracking-widest text-primary mb-2 sm:text-sm">
-              HOW IT WORKS
-            </p>
             <h2 className="font-display text-3xl font-bold text-ink sm:text-4xl">
               Three steps to a fixed problem
             </h2>
@@ -308,9 +302,6 @@ export default async function HomePage() {
       {/* Service area + CTA */}
       <section className="bg-ink text-white py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 text-center">
-          <p className="font-mono text-xs font-bold tracking-widest text-primary-soft mb-2 sm:text-sm">
-            WHERE WE WORK
-          </p>
           <h2 className="font-display text-3xl font-bold sm:text-4xl">
             Birtamod, Jhapa — this area only
           </h2>
