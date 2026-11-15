@@ -83,7 +83,7 @@ export function SiteHeader() {
 
           {/* Join as a Pro */}
           <Link
-            href="/join-as-pro"
+            href="/register/technician"
             className={cn(
               buttonVariants({ variant: "outline" }),
               "hidden sm:inline-flex",
@@ -167,7 +167,7 @@ export function SiteHeader() {
 
               {/* Join as a Pro — along the page links on small screens */}
               <Link
-                href="/join-as-pro"
+                href="/register/technician"
                 onClick={() => setSearchOpen(false)}
                 className={cn(buttonVariants({ variant: "outline" }), "w-full sm:hidden")}
               >

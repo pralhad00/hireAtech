@@ -44,13 +44,22 @@ CREATE TABLE category_aliases (          -- words people type for a category
 );
 CREATE INDEX category_aliases_trgm ON category_aliases USING gin (alias gin_trgm_ops);
 
+CREATE TABLE areas (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  city text NOT NULL DEFAULT 'Birtamod',
+  district text NOT NULL DEFAULT 'Jhapa',
+  is_active boolean NOT NULL DEFAULT true,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+
 CREATE TABLE technician_profiles (
   user_id uuid PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
   category_id uuid NOT NULL REFERENCES service_categories(id),
   headline text,
   bio text,
   experience_years int NOT NULL CHECK (experience_years BETWEEN 0 AND 60),
-  service_area text NOT NULL,
+  service_area text,
   approval_status text NOT NULL DEFAULT 'pending'
     CHECK (approval_status IN ('pending','approved','rejected')),
   rejection_reason text,
@@ -78,10 +87,11 @@ CREATE TABLE addresses (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   label text NOT NULL,
-  province text NOT NULL,
-  district text NOT NULL,
-  municipality text NOT NULL,
+  province text NOT NULL DEFAULT 'Province No. 1',
+  district text NOT NULL DEFAULT 'Jhapa',
+  municipality text NOT NULL DEFAULT 'Birtamod',
   ward text NOT NULL,
+  area_id uuid REFERENCES areas(id),
   area text NOT NULL,
   landmark text,
   is_default boolean NOT NULL DEFAULT false

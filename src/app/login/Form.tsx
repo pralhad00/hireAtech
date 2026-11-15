@@ -92,8 +92,8 @@ export function LoginForm({ next }: { next: string }) {
       </p>
       <p className="text-center text-sm text-muted-strong">
         Technician?{" "}
-        <Link href={"/register/technician?next=" + encodeURIComponent(next)} className="text-primary underline hover:no-underline">
-          Register as technician
+        <Link href={"/login/technician?next=" + encodeURIComponent(next)} className="text-primary underline hover:no-underline">
+          Log in as technician
         </Link>
       </p>
     </form>

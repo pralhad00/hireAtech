@@ -57,6 +57,16 @@ export async function listCategories(): Promise<CategorySummary[]> {
   return rows;
 }
 
+/** All active categories as id/name pairs, for technician category selection. */
+export async function listCategoryOptions(): Promise<{ id: string; name: string }[]> {
+  "use cache";
+  cacheTag(CATEGORIES_TAG);
+  const { rows } = await query<{ id: string; name: string }>(
+    `SELECT id, name FROM service_categories WHERE is_active = true ORDER BY name`,
+  );
+  return rows;
+}
+
 /** One category by slug plus how many approved technicians it has. */
 export async function getCategoryBySlug(
   slug: string,

@@ -47,6 +47,17 @@ VALUES
    'tool')
 ON CONFLICT (slug) DO NOTHING;
 
+-- Areas in Birtamod (used for customer addresses). Only these 7 are active.
+INSERT INTO areas (name, city, district, is_active) VALUES
+  ('Birta Bazaar', 'Birtamod', 'Jhapa', true),
+  ('Sainik Mod', 'Birtamod', 'Jhapa', true),
+  ('Charpane', 'Birtamod', 'Jhapa', true),
+  ('Bhrikuti Chowk', 'Birtamod', 'Jhapa', true),
+  ('Sanischare Road', 'Birtamod', 'Jhapa', true),
+  ('Dharma Kanta Area', 'Birtamod', 'Jhapa', true),
+  ('Arjundhara Road Area', 'Birtamod', 'Jhapa', true)
+ON CONFLICT DO NOTHING;
+
 -- Words people type when searching (spec §12). Extend via Admin > Categories.
 INSERT INTO category_aliases (category_id, alias)
 SELECT c.id, v.alias
