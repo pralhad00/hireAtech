@@ -14,7 +14,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { Pool } from "pg";
-import { hashPassword } from "@/lib/auth/password";
+import bcrypt from "bcryptjs";
 
 // --- tiny .env.local reader (tsx does not load Next.js env files) ---
 function loadEnvFile(): void {
@@ -72,8 +72,10 @@ async function main(): Promise<void> {
       return;
     }
 
-    // Hash password (bcrypt cost 12, spec §6)
-    const passwordHash = await hashPassword(password);
+    // Hash password (bcrypt cost 12, spec §6) — required directly because
+    // tsx runs plain Node, not a Next.js Server Component, so "server-only"
+    // modules (like src/lib/auth/password.ts) cannot be imported here.
+    const passwordHash = await bcrypt.hash(password, 12);
 
     // Insert admin user
     await pool.query(
