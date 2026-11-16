@@ -48,6 +48,9 @@ export function SiteHeader() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [searchOpen]);
 
+  // The main website header is not part of the admin shell.
+  if (pathname.startsWith("/admin")) return null;
+
   return (
     <header className="border-b border-border bg-bg sticky top-0 z-40">
       <div className="mx-auto max-w-6xl px-4 py-3 sm:px-6">

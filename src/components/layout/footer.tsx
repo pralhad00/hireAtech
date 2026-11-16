@@ -1,10 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 /*
  * Marketplace Platform footer — clean, sharp corners, honest content.
  * Charcoal ground, white text, ruled sections, serial strip.
- * Server component — no JavaScript.
+ * Client component so it can opt out of the admin shell (no server-side
+ * pathname is available in the root layout).
  */
 
 const columns = [
@@ -25,6 +29,10 @@ const columns = [
 ];
 
 export function SiteFooter() {
+  const pathname = usePathname();
+  // The main website footer is not part of the admin shell.
+  if (pathname.startsWith("/admin")) return null;
+
   return (
     <footer className="border-t border-border bg-ink text-white">
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
