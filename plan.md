@@ -110,16 +110,20 @@ Plan file generated from `spec.md` §14. Tick a task only when it is actually ve
 - [x] `scripts/create-admin.ts` — reads `ADMIN_EMAIL`/`ADMIN_PASSWORD`, validates password rules, bcrypt-hashes, inserts admin; npm script `create-admin`
 - [x] Admin login page — `src/app/admin/login/page.tsx` + `Form.tsx`, dark color profile, redirects to `/admin` on success
 - [ ] Admin login works — needs `ADMIN_PASSWORD` set in `.env.local` (currently a placeholder), then `npm run create-admin`
-- [ ] `/admin` dashboard with counts
-- [ ] `/admin/categories` — CRUD categories + aliases (Server Actions)
+- [x] `/admin` dashboard with counts — `src/app/admin/page.tsx` + `src/lib/queries/admin.ts`
+- [x] Admin sidebar navigation — `src/components/layout/admin-sidebar.tsx` (Dashboard, Technicians, Bookings, Categories, Users, Sign out) on every admin page
+- [x] `/admin/technicians` — pending list with Approve / Reject (+ required reason); approved and rejected lists — `src/app/admin/technicians/`
+- [x] `/admin/bookings` — all bookings, status filter, cancel (non-final) — `src/app/admin/bookings/`
+- [x] `/admin/categories` — add/edit/deactivate categories + search aliases — `src/app/admin/categories/`
+- [ ] `/admin/users` — list, block/unblock, delete only when no bookings
 - [ ] Guards on all admin routes and actions (§6.4) — `requireRole(["admin"])` exists in guards.ts
 - [ ] Update `plan.md`, commit
 
-**Files involved:** `scripts/create-admin.ts`, `package.json`, `src/app/admin/login/`, `src/app/admin/page.tsx`, `src/app/admin/categories/`, `src/lib/actions/admin.ts`, `src/lib/queries/categories.ts`
+**Files involved:** `scripts/create-admin.ts`, `package.json`, `src/app/admin/login/`, `src/app/admin/page.tsx`, `src/lib/queries/admin.ts`, `src/components/layout/admin-sidebar.tsx`, `src/app/admin/technicians/`, `src/lib/queries/technicians.ts`, `src/lib/queries/notifications.ts`, `src/lib/actions/admin.ts`, `src/app/admin/categories/`, `src/app/admin/bookings/`, `src/app/admin/users/`, `src/lib/actions/admin.ts`, `src/lib/queries/categories.ts`
 
-**Check yourself:** `npm run create-admin` → login as admin works; add a category → new row visible in `psql`; a customer account opening `/admin` is blocked.
+**Check yourself:** `npm run create-admin` → login as admin works; `/admin` loads with counts; sidebar navigates to all sections; `/admin/technicians` shows pending techs with Approve/Reject; `/admin/bookings` lists all bookings with status filter; cancel works for pending/accepted/in_progress bookings (refused for completed/cancelled/rejected); `/admin/categories` shows categories with Add/Edit/Deactivate + aliases; a customer account opening `/admin` is blocked.
 
-**Status:** partially done — create-admin script + admin login page created; dashboard and categories not yet built.
+**Status:** partially done — create-admin script + admin login + dashboard + sidebar + technicians + bookings + categories created; users section not yet built.
 
 ---
 

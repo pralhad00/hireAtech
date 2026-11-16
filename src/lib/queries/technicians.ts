@@ -139,6 +139,85 @@ export async function getRecentReviews(userId: string, limit = 5): Promise<Revie
   return result.rows;
 }
 
+/** A technician profile with user and category info, for admin listing. */
+export interface AdminTechnician {
+  userId: string;
+  email: string;
+  fullName: string;
+  phone: string;
+  isBlocked: boolean;
+  categoryId: string;
+  categoryName: string;
+  headline: string | null;
+  experienceYears: number;
+  serviceArea: string | null;
+  approvalStatus: "pending" | "approved" | "rejected";
+  rejectionReason: string | null;
+  createdAt: Date;
+}
+
+interface AdminTechnicianRaw {
+  user_id: string;
+  email: string;
+  full_name: string;
+  phone: string;
+  is_blocked: boolean;
+  category_id: string;
+  category_name: string;
+  headline: string | null;
+  experience_years: number;
+  service_area: string | null;
+  approval_status: "pending" | "approved" | "rejected";
+  rejection_reason: string | null;
+  created_at: Date;
+}
+
+/** List all technicians with their profiles (admin view). */
+export async function listAllTechnicians(): Promise<AdminTechnician[]> {
+  const result = await query<AdminTechnicianRaw>(
+    `SELECT u.id AS user_id, u.email, u.full_name, u.phone, u.is_blocked,
+            tp.category_id, c.name AS category_name, tp.headline,
+            tp.experience_years, tp.service_area, tp.approval_status,
+            tp.rejection_reason, tp.created_at
+     FROM users u
+     JOIN technician_profiles tp ON tp.user_id = u.id
+     JOIN service_categories c ON c.id = tp.category_id
+     WHERE u.role = 'technician'
+     ORDER BY tp.approval_status, u.created_at DESC`,
+    [],
+  );
+  return result.rows.map((row) => ({
+    userId: row.user_id,
+    email: row.email,
+    fullName: row.full_name,
+    phone: row.phone,
+    isBlocked: row.is_blocked,
+    categoryId: row.category_id,
+    categoryName: row.category_name,
+    headline: row.headline,
+    experienceYears: row.experience_years,
+    serviceArea: row.service_area,
+    approvalStatus: row.approval_status,
+    rejectionReason: row.rejection_reason,
+    createdAt: row.created_at,
+  }));
+}
+
+/** Approve or reject a technician (admin only). */
+export async function setTechnicianApprovalStatus(
+  userId: string,
+  status: "approved" | "rejected",
+  rejectionReason: string | null,
+): Promise<void> {
+  await query(
+    `UPDATE technician_profiles
+      SET approval_status = $2,
+          rejection_reason = $3
+     WHERE user_id = $1`,
+    [userId, status, rejectionReason],
+  );
+}
+
 /** All services offered by a technician. */
 export interface TechnicianService {
   id: string;
