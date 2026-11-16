@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
 import { SiteHeader } from "@/components/layout/header";
 import { SiteFooter } from "@/components/layout/footer";
@@ -50,7 +51,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
-        <SiteHeader />
+        <Suspense fallback={<nav className="border-b border-border bg-bg" />}>
+          <SiteHeader />
+        </Suspense>
         <main id="main-content" className="flex-1">
           {children}
         </main>

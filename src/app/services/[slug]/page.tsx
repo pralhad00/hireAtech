@@ -11,6 +11,8 @@ import { getCategoryBySlug } from "@/lib/queries/categories";
  * Real category data; technician list placeholder until Steps 8-9.
  */
 
+export const instant = false;
+
 export async function generateMetadata({
   params,
 }: { params: Promise<{ slug: string }> }): Promise<Metadata> {

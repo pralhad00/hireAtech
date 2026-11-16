@@ -86,22 +86,40 @@ Plan file generated from `spec.md` §14. Tick a task only when it is actually ve
 
 ## Step 4 — Authentication
 
-- [ ] zod validation schemas (name/email/phone/password rules, §13)
-- [ ] `src/lib/auth/password.ts` — bcryptjs, cost 12 (8–64 chars, ≥1 letter + 1 digit)
-- [ ] `src/lib/auth/session.ts` — random token, SHA-256 stored, httpOnly/sameSite cookie, 7-day expiry
-- [ ] `src/lib/auth/guards.ts` — `getCurrentUser`, `requireUser`, `requireRole`, `requireApprovedTechnician`
-- [ ] `src/lib/queries/users.ts` + `sessions.ts` — all SQL parameterized
-- [ ] Server Actions: register (customer), login (equal-timing dummy compare, generic error), logout
-- [ ] Login lockout: 5 failed attempts → 15-min lock (`failed_login_attempts`, `locked_until`); blocked users refused
-- [ ] `/login`, `/register` pages + redirect rules (§5: `next` must be relative path; signed-in users routed to role home)
-- [ ] Expired-session cleanup on login; password change deletes other sessions
-- [ ] Update `plan.md`, commit
+- [x] zod validation schemas (name/email/phone/password rules, §13)
+- [x] `src/lib/auth/password.ts` — bcryptjs, cost 12 (8–64 chars, ≥1 letter + 1 digit)
+- [x] `src/lib/auth/session.ts` — random token, SHA-256 stored, httpOnly/sameSite cookie, 7-day expiry
+- [x] `src/lib/auth/guards.ts` — `getCurrentUser`, `requireUser`, `requireRole`, `requireApprovedTechnician`
+- [x] `src/lib/queries/users.ts` + `sessions.ts` — all SQL parameterized
+- [x] Server Actions: register (customer), login (equal-timing dummy compare, generic error), logout
+- [x] Login lockout: 5 failed attempts → 15-min lock (`failed_login_attempts`, `locked_until`); blocked users refused
+- [x] `/login`, `/register` pages + redirect rules (§5: `next` must be relative path; signed-in users routed to role home)
+- [x] Expired-session cleanup on login; password change deletes other sessions
+- [x] Update `plan.md`, commit
 
 **Files involved:** `src/lib/auth/*`, `src/lib/queries/users.ts`, `sessions.ts`, `src/lib/validation/*`, `src/lib/actions/auth.ts`, `src/app/login/`, `src/app/register/`
 
 **Check yourself:** register → `SELECT email, role, left(password_hash,4) FROM users;` shows `$2`; DevTools cookies → httpOnly session cookie; `SELECT * FROM sessions;` row exists, `token_hash` ≠ cookie value; logout removes row; signed-out `/bookings` → redirects to `/login`; wrong password ×6 → locked.
 
-**Status:** not started.
+**Status:** done — all auth code exists and compiles. `requireRole(["admin"])` guards admin routes. A separate admin login page was added (`src/app/admin/login/`) with a dark color profile distinct from customer login.
+
+---
+
+## Step 5 — Admin bootstrap and categories
+
+- [x] `scripts/create-admin.ts` — reads `ADMIN_EMAIL`/`ADMIN_PASSWORD`, validates password rules, bcrypt-hashes, inserts admin; npm script `create-admin`
+- [x] Admin login page — `src/app/admin/login/page.tsx` + `Form.tsx`, dark color profile, redirects to `/admin` on success
+- [ ] Admin login works — needs `ADMIN_PASSWORD` set in `.env.local` (currently a placeholder), then `npm run create-admin`
+- [ ] `/admin` dashboard with counts
+- [ ] `/admin/categories` — CRUD categories + aliases (Server Actions)
+- [ ] Guards on all admin routes and actions (§6.4) — `requireRole(["admin"])` exists in guards.ts
+- [ ] Update `plan.md`, commit
+
+**Files involved:** `scripts/create-admin.ts`, `package.json`, `src/app/admin/login/`, `src/app/admin/page.tsx`, `src/app/admin/categories/`, `src/lib/actions/admin.ts`, `src/lib/queries/categories.ts`
+
+**Check yourself:** `npm run create-admin` → login as admin works; add a category → new row visible in `psql`; a customer account opening `/admin` is blocked.
+
+**Status:** partially done — create-admin script + admin login page created; dashboard and categories not yet built.
 
 ---
 

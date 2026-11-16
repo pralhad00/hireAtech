@@ -43,6 +43,24 @@ export const technicianRegisterSchema = z.object({
 
 export const logoutSchema = z.object({});
 
+export const technicianProfileSchema = z.object({
+  phone: z.string().trim().regex(mobileRegex, "Mobile number must be 10 digits"),
+  headline: z.string().trim().max(160, "Headline must be 160 characters or less").optional().or(z.literal("")),
+  bio: z.string().trim().max(1000, "Bio must be 1000 characters or less").optional().or(z.literal("")),
+  experienceYears: z.coerce.number().int().min(0, "Experience must be 0 or more").max(60, "Experience cannot exceed 60 years"),
+  categoryId: z.string().uuid("Invalid category"),
+});
+
+export const technicianServiceSchema = z.object({
+  title: z.string().trim().min(1, "Service title is required").max(100),
+  description: z.string().trim().max(500, "Description must be 500 characters or less").optional().or(z.literal("")),
+  price: z.coerce.number().nonnegative("Price must be 0 or more").optional().or(z.literal("")),
+  priceType: z.enum(["per_visit", "per_hour", "fixed", "quote"]),
+  isActive: z.boolean(),
+});
+
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type TechnicianRegisterInput = z.infer<typeof technicianRegisterSchema>;
+export type TechnicianProfileInput = z.infer<typeof technicianProfileSchema>;
+export type TechnicianServiceInput = z.infer<typeof technicianServiceSchema>;
