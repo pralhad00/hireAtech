@@ -23,17 +23,16 @@ HireATech is a web platform where customers hire local technicians. Technicians 
 ## Positioning
 
 - A **local, Birtamod-specific** booking platform — not a national listings site. Service area, NPR pricing, Nepali phone numbers, no postcodes.
-- **Forgiving search is the teacher's priority and the product's differentiator:** one prominent search box that matches "plamber"/"plumbar" → Plumber and "bijuli" → Electrician, via a category-alias table with trigram similarity (phonetic functions are only a secondary fallback; English-oriented, weak for romanized Nepali words).
+- **Forgiving search is the teacher's priority and the product's differentiator:**
 - **Trust through an approval chain:** admin-approved technicians, server-enforced booking status history, and reviews only on completed bookings — customers always pick a specific technician (there is no "post a job and wait for offers").
 - **Honesty as policy:** no fake stats, testimonials, invented phone numbers, or 24/7 promises anywhere; pending requests are never labelled "confirmed"; "online payment — coming soon" is shown disabled rather than faked.
 
 ## Operating Context
 
-- Service area: Birtamod, Jhapa (Nepal). Currency NPR; Nepali mobile numbers (10 digits starting 96/97/98); no postcode/ZIP anywhere.
-- Users search with English trade names and romanized Nepali terms (e.g. "bijuli mistri", "pani", "rangrogan", "mistri"); the alias table names these — the team reviews and extends them. UI copy is English; multi-language support is out of scope.
-- The owner is a student new to Next.js/TypeScript/SQL/auth: product work proceeds in small verified steps ("Check yourself" blocks after each step, per spec §14 / plan.md). The owner understands and verifies every part.
-- Build status: Steps 1–2 done (scaffold; database — one owner verification pending: stop-Postgres health test). Step 3 (layout and public pages) code complete and rebuilt through two owner-approved design passes (Job Sheet world; fonts finalized as Space Grotesk) — **owner re-check pending before Step 4 (Authentication)**. Progress is tracked in `plan.md`; `spec.md` is the source of truth.
-
+- Service area: Birtamod, Jhapa (Nepal). ; Nepali mobile numbers (10 digits starting 96/97/98); no postcode/ZIP anywhere, but there will be list of common areas. 
+- Users search with English trade names like leakage in draining pipe, fridge light is not working like that. 
+- the owner needs to know what you are doing in simple english while writing the code: product work proceeds in small verified steps ("Check yourself" blocks after each step, per spec §14 / plan.md). The owner understands and verifies every part.
+- everything is done after making plan and checklist of the work. like you have a plan.md file where you plan the mian things like creating home page, creating auth for customer, and than when we are in each phase of the plan we have planning for that work.
 ## Capabilities and Constraints
 
 - **Confirmed:** three roles (customer/technician/admin) in one `users` table; hand-built auth (bcryptjs cost 12, hashed session tokens in httpOnly cookies, lockout 5 fails/15 min); zod validation server-side; booking 7-step form with status lifecycle `pending → accepted → in_progress → completed` plus `rejected`/`cancelled`; in-app notifications only (no SMS/email); reviews 1–5 stars + ≤500-char comment, one per booking; cash payment only.
